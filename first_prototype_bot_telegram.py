@@ -3,11 +3,16 @@ from functools import wraps
 
 
 import telegram
-from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, MessageHandler, Filters
+from telegram.ext import (
+    Updater,
+    CommandHandler,
+    CallbackQueryHandler,
+    MessageHandler,
+    Filters,
+)
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton
 
 from uuid import uuid4
-
 
 
 def get_config():
@@ -38,8 +43,6 @@ def get_config():
 #     print('secret')
 
 
-
-
 # def start(update, context):
 #     context.bot.send_message(
 #         chat_id=update.effective_chat.id,
@@ -48,97 +51,97 @@ def get_config():
 #
 
 
-
 def start(update, context):
-  update.message.reply_text(main_menu_message(),
-                            reply_markup=main_menu_keyboard())
-
+    update.message.reply_text(main_menu_message(), reply_markup=main_menu_keyboard())
 
 
 def main_menu(update, context):
-  query = update.callback_query
-  context.bot.edit_message_text(chat_id=query.message.chat_id,
-                        message_id=query.message.message_id,
-                        text=main_menu_message(),
-                        reply_markup=main_menu_keyboard())
-
+    query = update.callback_query
+    context.bot.edit_message_text(
+        chat_id=query.message.chat_id,
+        message_id=query.message.message_id,
+        text=main_menu_message(),
+        reply_markup=main_menu_keyboard(),
+    )
 
 
 def first_menu(update, context):
-  query = update.callback_query
-  context.bot.edit_message_text(chat_id=query.message.chat_id,
-                        message_id=query.message.message_id,
-                        text=first_menu_message(),
-                        reply_markup=our_servises_keyboard())
-
-
-
-
+    query = update.callback_query
+    context.bot.edit_message_text(
+        chat_id=query.message.chat_id,
+        message_id=query.message.message_id,
+        text=first_menu_message(),
+        reply_markup=our_servises_keyboard(),
+    )
 
 
 def make_order(update, context):
     query = update.callback_query
-    context.bot.edit_message_text(chat_id=query.message.chat_id,
-                                 message_id=query.message.message_id,
-                                 text=make_order_message(),
-                                 reply_markup=make_order_keyboard())
+    context.bot.edit_message_text(
+        chat_id=query.message.chat_id,
+        message_id=query.message.message_id,
+        text=make_order_message(),
+        reply_markup=make_order_keyboard(),
+    )
 
 
 def deals(update, context):
     query = update.callback_query
-    context.bot.edit_message_text(chat_id=query.message.chat_id,
-                                 message_id=query.message.message_id,
-                                 text=deals_message(),
-                                 reply_markup=our_servises_keyboard())
+    context.bot.edit_message_text(
+        chat_id=query.message.chat_id,
+        message_id=query.message.message_id,
+        text=deals_message(),
+        reply_markup=our_servises_keyboard(),
+    )
 
 
 def seasons(update, context):
     query = update.callback_query
-    context.bot.edit_message_text(chat_id=query.message.chat_id,
-                                 message_id=query.message.message_id,
-                                 text=seasons_message(),
-                                 reply_markup=our_servises_keyboard())
+    context.bot.edit_message_text(
+        chat_id=query.message.chat_id,
+        message_id=query.message.message_id,
+        text=seasons_message(),
+        reply_markup=our_servises_keyboard(),
+    )
 
 
 def extra_deals(update, context):
     query = update.callback_query
-    context.bot.edit_message_text(chat_id=query.message.chat_id,
-                                  message_id=query.message.message_id,
-                                  text=extra_deals_message(),
-                                  reply_markup=our_servises_keyboard())
-
+    context.bot.edit_message_text(
+        chat_id=query.message.chat_id,
+        message_id=query.message.message_id,
+        text=extra_deals_message(),
+        reply_markup=our_servises_keyboard(),
+    )
 
 
 def birthday_in_cafe(update, context):
     query = update.callback_query
-    context.bot.edit_message_text(chat_id=query.message.chat_id,
-                                 message_id=query.message.message_id,
-                                 text=birthday_in_cafe_message(),
-                                 reply_markup=send_order_keyboard())
+    context.bot.edit_message_text(
+        chat_id=query.message.chat_id,
+        message_id=query.message.message_id,
+        text=birthday_in_cafe_message(),
+        reply_markup=send_order_keyboard(),
+    )
 
 
 def birthday_in_studio(update, context):
     query = update.callback_query
-    context.bot.edit_message_text(chat_id=query.message.chat_id,
-                                 message_id=query.message.message_id,
-                                 text=birthday_in_studio_message(),
-                                 reply_markup=send_order_keyboard())
-
-
-
-
-
-
-
-
+    context.bot.edit_message_text(
+        chat_id=query.message.chat_id,
+        message_id=query.message.message_id,
+        text=birthday_in_studio_message(),
+        reply_markup=send_order_keyboard(),
+    )
 
 
 def send_order(update, context):
     query = update.callback_query
-    context.bot.edit_message_text(chat_id=query.message.chat_id,
-                                 message_id=query.message.message_id,
-                                 text=send_order_message(context))
-
+    context.bot.edit_message_text(
+        chat_id=query.message.chat_id,
+        message_id=query.message.message_id,
+        text=send_order_message(context),
+    )
 
 
 def contact_us(update, context):
@@ -156,77 +159,122 @@ def contact_us(update, context):
 
     update.message.reply_text(update.message.text)
 
-    context.bot.send_message(chat_id=update.effective_chat.id, text=get_config()['messages']['4'])
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, text=get_config()["messages"]["msg4"]
+    )
 
     # updater.bot.reply_text(chat_id=update.effective_chat.id, text=context.args)
 
-         # updater.bot.send_message(chat_id=LIST_OF_ADMINS[0], text=str(e))
+    # updater.bot.send_message(chat_id=LIST_OF_ADMINS[0], text=str(e))
 
 
 ############################ Keyboards #########################################
 
-def main_menu_keyboard():
-        keyboard = [[InlineKeyboardButton(get_config()['buttons']['2'], callback_data='our_servises')],
-                    [InlineKeyboardButton(get_config()['buttons']['3'], callback_data='make_order')],
-                    [InlineKeyboardButton(get_config()['buttons']['4'], callback_data='contact_us')]]
-        return InlineKeyboardMarkup(keyboard)
 
+def main_menu_keyboard():
+    keyboard = [
+        [
+            InlineKeyboardButton(
+                get_config()["buttons"]["btn2"], callback_data="our_servises"
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                get_config()["buttons"]["btn3"], callback_data="make_order"
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                get_config()["buttons"]["btn4"], callback_data="contact_us"
+            )
+        ],
+    ]
+    return InlineKeyboardMarkup(keyboard)
 
 
 def our_servises_keyboard():
-        keyboard = [[InlineKeyboardButton(get_config()['buttons']['5'], callback_data='deals')],
-                    [InlineKeyboardButton(get_config()['buttons']['6'], callback_data='seasons')],
-                    [InlineKeyboardButton(get_config()['buttons']['7'], callback_data='extra_deals')],
-                    [InlineKeyboardButton('Main menu', callback_data='main')]]
-        return InlineKeyboardMarkup(keyboard)
-
+    keyboard = [
+        [InlineKeyboardButton(get_config()["buttons"]["btn5"], callback_data="deals")],
+        [
+            InlineKeyboardButton(
+                get_config()["buttons"]["btn6"], callback_data="seasons"
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                get_config()["buttons"]["btn7"], callback_data="extra_deals"
+            )
+        ],
+        [InlineKeyboardButton("Main menu", callback_data="main")],
+    ]
+    return InlineKeyboardMarkup(keyboard)
 
 
 def make_order_keyboard():
-        keyboard = [[InlineKeyboardButton(get_config()['buttons']['8'], callback_data='birthday_in_cafe')],
-                    [InlineKeyboardButton(get_config()['buttons']['9'], callback_data='birthday_in_studio')],
-                    [InlineKeyboardButton(get_config()['buttons']['10'], callback_data='contact_us')],
-                    [InlineKeyboardButton('Main menu', callback_data='main')]]
-        return InlineKeyboardMarkup(keyboard)
-
+    keyboard = [
+        [
+            InlineKeyboardButton(
+                get_config()["buttons"]["btn8"], callback_data="birthday_in_cafe"
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                get_config()["buttons"]["btn9"], callback_data="birthday_in_studio"
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                get_config()["buttons"]["btn10"], callback_data="contact_us"
+            )
+        ],
+        [InlineKeyboardButton("Main menu", callback_data="main")],
+    ]
+    return InlineKeyboardMarkup(keyboard)
 
 
 def send_order_keyboard():
-         keyboard = [[InlineKeyboardButton(get_config()['buttons']['11'], callback_data='send_order')],
-                     [InlineKeyboardButton('Main menu', callback_data='main')]]
-         return InlineKeyboardMarkup(keyboard)
+    keyboard = [
+        [
+            InlineKeyboardButton(
+                get_config()["buttons"]["btn11"], callback_data="send_order"
+            )
+        ],
+        [InlineKeyboardButton("Main menu", callback_data="main")],
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
 
 ############################# Messages #########################################
 def main_menu_message():
-        return get_config()['messages']['1']
+    return get_config()["messages"]["msg1"]
 
 
 def first_menu_message():
-        return get_config()['messages']['2']
+    return get_config()["messages"]["msg2"]
 
 
 def make_order_message():
-        return get_config()['messages']['3']
+    return get_config()["messages"]["msg3"]
 
 
 def deals_message():
-        return get_config()['messages']['5']
+    return get_config()["messages"]["msg5"]
 
 
 def seasons_message():
-        return get_config()['messages']['6']
+    return get_config()["messages"]["msg6"]
 
 
 def extra_deals_message():
-        return get_config()['messages']['7']
+    return get_config()["messages"]["msg7"]
 
 
 def birthday_in_cafe_message():
-        return get_config()['messages']['8']
+    return get_config()["messages"]["msg8"]
 
 
 def birthday_in_studio_message():
-        return get_config()['messages']['9']
+    return get_config()["messages"]["msg9"]
 
 
 # def put(update, context):
@@ -254,32 +302,41 @@ def birthday_in_studio_message():
 #         update.message.reply_text('Not found')
 
 
-
 ############################# Handlers #########################################
 if __name__ == "__main__":
 
-        bot=telegram.Bot(get_config()["telegram_bot_token"])
-        updater = Updater(get_config()["telegram_bot_token"], use_context=True)
+    bot = telegram.Bot(get_config()["telegram_bot_token"])
+    updater = Updater(get_config()["telegram_bot_token"], use_context=True)
 
-        updater.dispatcher.add_handler(CommandHandler('start', start))
+    updater.dispatcher.add_handler(CommandHandler("start", start))
 
-        updater.dispatcher.add_handler(CallbackQueryHandler(main_menu, pattern='main'))
-        updater.dispatcher.add_handler(CallbackQueryHandler(first_menu, pattern='our_servises'))
-        updater.dispatcher.add_handler(CallbackQueryHandler(make_order, pattern='make_order'))
-        updater.dispatcher.add_handler(CallbackQueryHandler(deals, pattern='deals'))
-        updater.dispatcher.add_handler(CallbackQueryHandler(seasons, pattern='seasons'))
-        updater.dispatcher.add_handler(CallbackQueryHandler(extra_deals, pattern='extra_deals'))
-        updater.dispatcher.add_handler(CallbackQueryHandler(birthday_in_cafe, pattern='birthday_in_cafe'))
-        updater.dispatcher.add_handler(CallbackQueryHandler(birthday_in_studio, pattern='birthday_in_studio'))
+    updater.dispatcher.add_handler(CallbackQueryHandler(main_menu, pattern="main"))
+    updater.dispatcher.add_handler(
+        CallbackQueryHandler(first_menu, pattern="our_servises")
+    )
+    updater.dispatcher.add_handler(
+        CallbackQueryHandler(make_order, pattern="make_order")
+    )
+    updater.dispatcher.add_handler(CallbackQueryHandler(deals, pattern="deals"))
+    updater.dispatcher.add_handler(CallbackQueryHandler(seasons, pattern="seasons"))
+    updater.dispatcher.add_handler(
+        CallbackQueryHandler(extra_deals, pattern="extra_deals")
+    )
+    updater.dispatcher.add_handler(
+        CallbackQueryHandler(birthday_in_cafe, pattern="birthday_in_cafe")
+    )
+    updater.dispatcher.add_handler(
+        CallbackQueryHandler(birthday_in_studio, pattern="birthday_in_studio")
+    )
 
+    updater.dispatcher.add_handler(
+        CallbackQueryHandler(contact_us, pattern="contact_us")
+    )
+    updater.dispatcher.add_handler(
+        CallbackQueryHandler(send_order, pattern="send_order")
+    )
 
+    updater.dispatcher.add_handler(MessageHandler(Filters.text, contact_us))
 
-
-        updater.dispatcher.add_handler(CallbackQueryHandler(contact_us, pattern='contact_us'))
-        updater.dispatcher.add_handler(CallbackQueryHandler(send_order, pattern='send_order'))
-
-        updater.dispatcher.add_handler(MessageHandler(Filters.text, contact_us))
-
-
-        updater.start_polling()
-        # updater.idle()
+    updater.start_polling()
+    # updater.idle()
