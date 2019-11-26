@@ -12,6 +12,20 @@ def get_config():
 bot = telebot.TeleBot(get_config()["telegram_bot_token"])
 
 
+def send_typing(message):
+    bot.send_chat_action(message.from_user.id, 'typing')
+    # sendChatAction
+    # action_string can be one of the following strings: 'typing', 'upload_photo', 'record_video', 'upload_video',
+    # 'record_audio', 'upload_audio', 'upload_document' or 'find_location'.
+    # bot.send_chat_action(chat_id, action_string)
+def send_typing_image(message):
+    bot.send_chat_action(message.from_user.id, 'upload_photo')
+
+def send_typing_audio(message):
+    bot.send_chat_action(message.from_user.id, 'record_audio')
+
+def send_typing_video(message):
+    bot.send_chat_action(message.from_user.id, 'upload_video')
 ############### Keyboards #####################################################
 
 def keyboard_1():
@@ -217,21 +231,25 @@ def keyboard_5():
 #####################################################
 
 def cancel(message):
+    send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['messages']['msg1'], reply_markup=get_keyboard_reply_markup('main_menu_button'))
 
 ############### Name and Phone #####################################################
 def get_user_name(message):
     if message.text == get_config()['buttons']['cancel_button']:
+        send_typing(message)
         bot.send_message(message.from_user.id, text=get_config()['messages']['cancel_message'])
         bot.register_next_step_handler(message, cancel)
     else:
         name = message.text
+        send_typing(message)
         bot.send_message(message.from_user.id, text=f"{get_config()['add_vars']['phone']} ?")
         bot.register_next_step_handler(message, get_user_phone, name)
 
 
 def get_user_phone(message, name):
     phone = message.text
+    send_typing(message)
     bot.send_message(message.from_user.id, text=f"{get_config()['add_vars']['name']}: {name}\n{get_config()['add_vars']['phone']}: {phone}", reply_markup=get_keyboard_reply_markup('main_menu_button'))
     # bot.send_message(931750534, text=f"{name} {phone}", reply_markup=get_keyboard_reply_markup('main_menu_button'))
 
@@ -240,58 +258,69 @@ def get_user_phone(message, name):
 ############# Order data ######################################################
 def get_order_data(message):
     if message.text == get_config()['buttons']['cancel_button']:
+        send_typing(message)
         bot.send_message(message.from_user.id, text=get_config()['messages']['cancel_message'])
         bot.register_next_step_handler(message, cancel)
     else:
         one = message.text
+        send_typing(message)
         bot.send_message(message.from_user.id, text=get_config()['order_data']['ord2'])
         bot.register_next_step_handler(message, get_order_data_1, one)
 
 
 def get_order_data_1(message, one):
     two = message.text
+    send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord3'])
     bot.register_next_step_handler(message, get_order_data_2, one, two)
 
 def get_order_data_2(message, one, two):
     three = message.text
+    send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord4'])
     bot.register_next_step_handler(message, get_order_data_3, one, two, three)
 
 
 def get_order_data_3(message, one, two, three):
     four = message.text
+    send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord5'])
     bot.register_next_step_handler(message, get_order_data_4, one, two, three, four)
 
 
 def get_order_data_4(message, one, two, three, four):
     five = message.text
+    send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord6'])
     bot.register_next_step_handler(message, get_order_data_5, one, two, three, four, five)
 
 
 def get_order_data_5(message, one, two, three, four, five):
     six = message.text
+    send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord7'])
     bot.register_next_step_handler(message, get_order_data_6, one, two, three, four, five, six)
 
 
 def get_order_data_6(message, one, two, three, four, five, six):
     seven = message.text
+    send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord8'])
     bot.register_next_step_handler(message, get_order_data_7, one, two, three, four, five, six, seven)
 
 
 def get_order_data_7(message, one, two, three, four, five, six, seven):
     eight = message.text
+    send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord9'])
     bot.register_next_step_handler(message, get_order_data_8, one, two, three, four, five, six, seven, eight)
 
 
 def get_order_data_8(message, one, two, three, four, five, six, seven, eight):
     nine = message.text
+    send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['messages']['after_order_message'], reply_markup=get_keyboard_reply_markup('main_menu_button'))
+    send_typing(message)
     bot.send_message(message.from_user.id, text=f"{one}, {two}, {three}, {four}, {five}, {six}, {seven}, {eight}, {nine}", reply_markup=get_keyboard_reply_markup('main_menu_button'))
     # bot.send_message(931750534, text=f"{one}\n{two}\n{three}\n{four}\n{five}\n{six}\n{seven}\n{eight}\n{nine}", reply_markup=get_keyboard_reply_markup('main_menu_button'))
 
@@ -312,16 +341,64 @@ def get_keyboard_reply_markup(btn):
     return reply_markup
 
 
-
+#######################################################################################################################################################
 def next_func_after_btn_msg_contact(message):
+    send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['messages']['contact_message'], reply_markup=get_keyboard_reply_markup("contact_button"))
     bot.register_next_step_handler(message, get_user_name)
 
+
+def next_func_after_btn_msg_send_image(message):
+    # sendPhoto
+    photo = open('media_samples/image.jpg', 'rb')
+    send_typing_image(message)
+    bot.send_photo(message.from_user.id, photo)
+    bot.send_photo(message.from_user.id, "FILEID")
+
+
+def next_func_after_btn_msg_send_video(message):
+
+    video = open('media_samples/video.mp4', 'rb')
+    send_typing_video(message)
+    bot.send_video(message.from_user.id, video)
+    bot.send_video(message.from_user.id, "FILEID")
+
+
+def next_func_after_btn_msg_send_audio(message):
+
+    # sendAudio
+    audio = open('media_samples/audio.mp3', 'rb')
+    send_typing_audio(message)
+    bot.send_audio(message.from_user.id, audio)
+    bot.send_audio(message.from_user.id, "FILEID")
+
+    # sendVoice
+    # voice = open('/tmp/voice.ogg', 'rb')
+    # bot.send_voice(chat_id, voice)
+    # bot.send_voice(chat_id, "FILEID")
+
+
+# sendLocation
+# bot.send_location(chat_id, lat, lon)
+
+
+def send_next_func_after_msg(message, btn, msg):
+    if get_config()['next_func_after_btn_msg'][btn] == "contact":
+        next_func_after_btn_msg_contact(message)
+    if get_config()['next_func_after_btn_msg'][btn] == "video":
+        next_func_after_btn_msg_send_video(message)
+    if get_config()['next_func_after_btn_msg'][btn] == "audio":
+        next_func_after_btn_msg_send_audio(message)
+    if get_config()['next_func_after_btn_msg'][btn] == "image":
+        next_func_after_btn_msg_send_image(message)
+    else:
+        bot.send_message(message.from_user.id, text=get_config()['messages'][msg], reply_markup=get_keyboard_reply_markup(btn))
 
 ###########################################################################################################################################################
 ###########################################################################################################################################################
 @bot.message_handler(commands=['help', 'start'])
 def send_welcome(message):
+    send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['messages']['msg1'], reply_markup=get_keyboard_reply_markup('main_menu_button'))
     # bot.register_next_step_handler(message, handler)
 
@@ -330,10 +407,11 @@ def send_welcome(message):
 @bot.message_handler(content_types=["text"])
 def handler(message):
     try:
-###########################################################################################################################################################
+############################## Buttons with next step ########################################################################################################
 
         if len(get_config()['buttons']['contact_button']) > 0:
             if message.text == get_config()['buttons']['contact_button']:
+                send_typing(message)
                 bot.send_message(message.from_user.id, text=get_config()['messages']['contact_message'], reply_markup=get_keyboard_reply_markup("contact_button"))
                 bot.register_next_step_handler(message, get_user_name)
         else:
@@ -342,7 +420,9 @@ def handler(message):
 
         if len(get_config()['buttons']['order_button']) > 0:
             if message.text == get_config()['buttons']['order_button']:
+                send_typing(message)
                 bot.send_message(message.from_user.id, text=get_config()['messages']['order_message'], reply_markup=get_keyboard_reply_markup("order_button"))
+                send_typing(message)
                 bot.send_message(message.from_user.id, text=get_config()['order_data']['ord1'])
                 bot.register_next_step_handler(message, get_order_data)
         else:
@@ -350,6 +430,7 @@ def handler(message):
 
         if len(get_config()['buttons']['main_menu_button']) > 0:
             if message.text == get_config()['buttons']['main_menu_button']:
+                send_typing(message)
                 bot.send_message(message.from_user.id, text=get_config()['messages']['main_menu_msg'], reply_markup=get_keyboard_reply_markup("main_menu_button"))
         else:
             pass
@@ -357,181 +438,121 @@ def handler(message):
 ###########################################################################################################################################################
         if len(get_config()['buttons']['btn1']) > 0:
             if message.text == get_config()['buttons']['btn1']:
-                if get_config()['next_func_after_btn_msg']['btn1'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg1'], reply_markup=get_keyboard_reply_markup("btn1"))
+                send_next_func_after_msg(message, 'btn1', 'msg1')
         else:
             pass
 
         if len(get_config()['buttons']['btn2']) > 0:
             if message.text == get_config()['buttons']['btn2']:
-                if get_config()['next_func_after_btn_msg']['btn2'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg2'], reply_markup=get_keyboard_reply_markup("btn2"))
+                send_next_func_after_msg(message, 'btn2', 'msg2')
         else:
             pass
 
         if len(get_config()['buttons']['btn3']) > 0:
             if message.text == get_config()['buttons']['btn3']:
-                if get_config()['next_func_after_btn_msg']['btn3'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg3'], reply_markup=get_keyboard_reply_markup("btn3"))
+                send_next_func_after_msg(message, 'btn3', 'msg3')
         else:
             pass
 
         if len(get_config()['buttons']['btn4']) > 0:
             if message.text == get_config()['buttons']['btn4']:
-                if get_config()['next_func_after_btn_msg']['btn4'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg4'], reply_markup=get_keyboard_reply_markup("btn4"))
+                send_next_func_after_msg(message, 'btn4', 'msg4')
         else:
             pass
 
         if len(get_config()['buttons']['btn5']) > 0:
             if message.text == get_config()['buttons']['btn5']:
-                if get_config()['next_func_after_btn_msg']['btn5'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg5'], reply_markup=get_keyboard_reply_markup("btn5"))
+                send_next_func_after_msg(message, 'btn5', 'msg5')
         else:
             pass
 
         if len(get_config()['buttons']['btn6']) > 0:
             if message.text == get_config()['buttons']['btn6']:
-                if get_config()['next_func_after_btn_msg']['btn6'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg6'], reply_markup=get_keyboard_reply_markup("btn6"))
+                send_next_func_after_msg(message, 'btn6', 'msg6')
         else:
             pass
 
         if len(get_config()['buttons']['btn7']) > 0:
             if message.text == get_config()['buttons']['btn7']:
-                if get_config()['next_func_after_btn_msg']['btn7'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg7'], reply_markup=get_keyboard_reply_markup("btn7"))
+                send_next_func_after_msg(message, 'btn7', 'msg7')
         else:
             pass
 
         if len(get_config()['buttons']['btn8']) > 0:
             if message.text == get_config()['buttons']['btn8']:
-                if get_config()['next_func_after_btn_msg']['btn8'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg8'], reply_markup=get_keyboard_reply_markup("btn8"))
+                send_next_func_after_msg(message, 'btn8', 'msg8')
         else:
             pass
 
         if len(get_config()['buttons']['btn9']) > 0:
             if message.text == get_config()['buttons']['btn9']:
-                if get_config()['next_func_after_btn_msg']['btn9'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg9'], reply_markup=get_keyboard_reply_markup("btn9"))
+                send_next_func_after_msg(message, 'btn9', 'msg9')
         else:
             pass
 
         if len(get_config()['buttons']['btn10']) > 0:
             if message.text == get_config()['buttons']['btn10']:
-                if get_config()['next_func_after_btn_msg']['btn10'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg10'], reply_markup=get_keyboard_reply_markup("btn10"))
+                send_next_func_after_msg(message, 'btn10', 'msg10')
         else:
             pass
 
         if len(get_config()['buttons']['btn11']) > 0:
             if message.text == get_config()['buttons']['btn11']:
-                if get_config()['next_func_after_btn_msg']['btn11'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg11'], reply_markup=get_keyboard_reply_markup("btn11"))
+                send_next_func_after_msg(message, 'btn11', 'msg11')
         else:
             pass
 
         if len(get_config()['buttons']['btn12']) > 0:
             if message.text == get_config()['buttons']['btn12']:
-                if get_config()['next_func_after_btn_msg']['btn12'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg12'], reply_markup=get_keyboard_reply_markup("btn12"))
+                send_next_func_after_msg(message, 'btn12', 'msg12')
         else:
             pass
 
         if len(get_config()['buttons']['btn13']) > 0:
             if message.text == get_config()['buttons']['btn13']:
-                if get_config()['next_func_after_btn_msg']['btn13'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg13'], reply_markup=get_keyboard_reply_markup("btn13"))
+                send_next_func_after_msg(message, 'btn13', 'msg13')
         else:
             pass
 
         if len(get_config()['buttons']['btn14']) > 0:
             if message.text == get_config()['buttons']['btn14']:
-                if get_config()['next_func_after_btn_msg']['btn14'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg14'], reply_markup=get_keyboard_reply_markup("btn14"))
+                send_next_func_after_msg(message, 'btn14', 'msg14')
         else:
             pass
 
         if len(get_config()['buttons']['btn15']) > 0:
             if message.text == get_config()['buttons']['btn15']:
-                if get_config()['next_func_after_btn_msg']['btn15'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg15'], reply_markup=get_keyboard_reply_markup("btn15"))
+                send_next_func_after_msg(message, 'btn15', 'msg15')
         else:
             pass
 
         if len(get_config()['buttons']['btn16']) > 0:
             if message.text == get_config()['buttons']['btn16']:
-                if get_config()['next_func_after_btn_msg']['btn16'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg16'], reply_markup=get_keyboard_reply_markup("btn16"))
+                send_next_func_after_msg(message, 'btn16', 'msg16')
         else:
             pass
 
         if len(get_config()['buttons']['btn17']) > 0:
             if message.text == get_config()['buttons']['btn17']:
-                if get_config()['next_func_after_btn_msg']['btn17'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg17'], reply_markup=get_keyboard_reply_markup("btn17"))
+                send_next_func_after_msg(message, 'btn17', 'msg17')
         else:
             pass
 
         if len(get_config()['buttons']['btn18']) > 0:
             if message.text == get_config()['buttons']['btn18']:
-                if get_config()['next_func_after_btn_msg']['btn18'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg18'], reply_markup=get_keyboard_reply_markup("btn18"))
+                send_next_func_after_msg(message, 'btn18', 'msg18')
         else:
             pass
 
         if len(get_config()['buttons']['btn19']) > 0:
             if message.text == get_config()['buttons']['btn19']:
-                if get_config()['next_func_after_btn_msg']['btn19'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg19'], reply_markup=get_keyboard_reply_markup("btn19"))
+                send_next_func_after_msg(message, 'btn19', 'msg19')
         else:
             pass
 
         if len(get_config()['buttons']['btn20']) > 0:
             if message.text == get_config()['buttons']['btn20']:
-                if get_config()['next_func_after_btn_msg']['btn20'] == "contact":
-                    next_func_after_btn_msg_contact(message)
-                else:
-                    bot.send_message(message.from_user.id, text=get_config()['messages']['msg20'], reply_markup=get_keyboard_reply_markup("btn20"))
+                send_next_func_after_msg(message, 'btn20', 'msg20')
         else:
             pass
 
@@ -554,4 +575,4 @@ def handler(message):
 # WARNING It will work only if enable_save_next_step_handlers was called!
 # bot.load_next_step_handlers()
 
-bot.polling()
+bot.polling(none_stop=False, interval=0, timeout=20)
