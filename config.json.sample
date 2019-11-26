@@ -136,26 +136,26 @@
     "btn20": "keyboard_1"
   },
 
-  "btn_call_contact_form_after": {
-    "btn1": "False",
-    "btn2": "False",
-    "btn3": "False",
-    "btn4": "False",
-    "btn5": "False",
-    "btn6": "True",
-    "btn7": "False",
-    "btn8": "False",
-    "btn9": "False",
-    "btn10": "True",
-    "btn11": "False",
-    "btn12": "False",
-    "btn13": "False",
-    "btn14": "False",
-    "btn15": "False",
-    "btn16": "False",
-    "btn17": "False",
-    "btn18": "False",
-    "btn19": "False",
-    "btn20": "False"
+  "next_func_after_btn_msg": {
+    "btn1": "",
+    "btn2": "",
+    "btn3": "",
+    "btn4": "",
+    "btn5": "",
+    "btn6": "contact",
+    "btn7": "",
+    "btn8": "",
+    "btn9": "",
+    "btn10": "contact",
+    "btn11": "",
+    "btn12": "",
+    "btn13": "",
+    "btn14": "",
+    "btn15": "",
+    "btn16": "",
+    "btn17": "",
+    "btn18": "",
+    "btn19": "",
+    "btn20": ""
   }
 }
