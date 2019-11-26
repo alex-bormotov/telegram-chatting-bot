@@ -217,7 +217,7 @@ def keyboard_5():
 #####################################################
 
 def cancel(message):
-    bot.send_message(message.from_user.id, text=get_config()['messages']['msg1'], reply_markup=keyboard_1())
+    bot.send_message(message.from_user.id, text=get_config()['messages']['msg1'], reply_markup=get_keyboard_reply_markup('main_menu_button'))
 
 ############### Name and Phone #####################################################
 def get_user_name(message):
@@ -232,8 +232,8 @@ def get_user_name(message):
 
 def get_user_phone(message, name):
     phone = message.text
-    bot.send_message(message.from_user.id, text=f"{get_config()['add_vars']['name']}: {name}\n{get_config()['add_vars']['phone']}: {phone}", reply_markup=keyboard_1())
-    # bot.send_message(931750534, text=f"{name} {phone}", reply_markup=keyboard_1())
+    bot.send_message(message.from_user.id, text=f"{get_config()['add_vars']['name']}: {name}\n{get_config()['add_vars']['phone']}: {phone}", reply_markup=get_keyboard_reply_markup('main_menu_button'))
+    # bot.send_message(931750534, text=f"{name} {phone}", reply_markup=get_keyboard_reply_markup('main_menu_button'))
 
 
 
@@ -291,9 +291,9 @@ def get_order_data_7(message, one, two, three, four, five, six, seven):
 
 def get_order_data_8(message, one, two, three, four, five, six, seven, eight):
     nine = message.text
-    bot.send_message(message.from_user.id, text=get_config()['messages']['after_order_message'], reply_markup=keyboard_1())
-    bot.send_message(message.from_user.id, text=f"{one}, {two}, {three}, {four}, {five}, {six}, {seven}, {eight}, {nine}", reply_markup=keyboard_1())
-    # bot.send_message(931750534, text=f"{one}\n{two}\n{three}\n{four}\n{five}\n{six}\n{seven}\n{eight}\n{nine}", reply_markup=keyboard_1())
+    bot.send_message(message.from_user.id, text=get_config()['messages']['after_order_message'], reply_markup=get_keyboard_reply_markup('main_menu_button'))
+    bot.send_message(message.from_user.id, text=f"{one}, {two}, {three}, {four}, {five}, {six}, {seven}, {eight}, {nine}", reply_markup=get_keyboard_reply_markup('main_menu_button'))
+    # bot.send_message(931750534, text=f"{one}\n{two}\n{three}\n{four}\n{five}\n{six}\n{seven}\n{eight}\n{nine}", reply_markup=get_keyboard_reply_markup('main_menu_button'))
 
 
 
@@ -314,7 +314,7 @@ def get_keyboard_reply_markup(btn):
 
 @bot.message_handler(commands=['help', 'start'])
 def send_welcome(message):
-    bot.send_message(message.from_user.id, text=get_config()['messages']['msg1'], reply_markup=keyboard_1())
+    bot.send_message(message.from_user.id, text=get_config()['messages']['msg1'], reply_markup=get_keyboard_reply_markup('main_menu_button'))
     # bot.register_next_step_handler(message, handler)
 
 
