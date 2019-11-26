@@ -2,29 +2,32 @@
   "telegram_bot_token": "",
 
   "buttons": {
-    "btn1": "start",
-    "btn2": "",
-    "btn3": "",
-    "btn4": "",
-    "btn5": "",
-    "btn6": "",
-    "btn7": "",
-    "btn8": "",
-    "btn9": "",
-    "btn10": "",
-    "btn11": "",
-    "btn12": "",
-    "btn13": "",
-    "btn14": "",
-    "btn15": "",
-    "btn16": "",
-    "btn17": "",
-    "btn18": "",
-    "btn19": "",
-    "btn20": ""
+  "contact_button": "",
+  "order_button": "",
+  "cancel": "",
+  "btn1": "",
+  "btn2": "",
+  "btn3": "",
+  "btn5": "",
+  "btn6": "",
+  "btn7": "",
+  "btn8": "",
+  "btn9": "",
+  "btn10": "",
+  "btn12": "",
+  "btn13": "",
+  "btn14": "",
+  "btn15": "",
+  "btn16": "",
+  "btn17": "",
+  "btn18": "",
+  "btn19": "",
+  "btn20": ""
   },
 
   "messages": {
+    "contact_message": "",
+    "order_message": "",
     "msg1": "",
     "msg2": "",
     "msg3": "",
@@ -60,16 +63,16 @@
     "ord10": ""
   },
 
-  "name_vars": {
-    "nv1": "",
-    "nv2": "",
-    "nv3": "",
-    "nv4": "",
-    "nv5": "",
-    "nv6": "",
-    "nv7": "",
-    "nv8": "",
-    "nv9": "",
-    "nv10": ""
+  "add_vars": {
+    "adv1": "",
+    "adv2": "",
+    "adv3": "",
+    "adv4": "",
+    "adv5": "",
+    "adv6": "",
+    "adv7": "",
+    "adv8": "",
+    "adv9": "",
+    "adv10": ""
   }
 }
