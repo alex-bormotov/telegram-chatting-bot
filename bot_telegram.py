@@ -9,6 +9,7 @@ def get_config():
         config = json.load(read_file)
         return config
 
+# https://github.com/python-telegram-bot/python-telegram-bot
 bot = telebot.TeleBot(get_config()["telegram_bot_token"])
 
 
@@ -28,204 +29,66 @@ def send_typing_video(message):
     bot.send_chat_action(message.from_user.id, 'upload_video')
 ############### Keyboards #####################################################
 
-def keyboard_1():
-    markup = types.ReplyKeyboardMarkup()
+def keyboard(keyboard_number):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 
-    if len(get_config()['keyboards']['keyboard_1_btn_1']) > 0:
-        btns_btn_a = get_config()['keyboards']['keyboard_1_btn_1']
+    button_a = ""
+    button_b = ""
+    button_c = ""
+    button_d = ""
+    button_e = ""
+
+    if len(get_config()['keyboards'][f'keyboard_{keyboard_number}_btn_1']) > 0:
+        btns_btn_a = get_config()['keyboards'][f'keyboard_{keyboard_number}_btn_1']
         button_a = types.KeyboardButton(get_config()['buttons'][btns_btn_a])
-        markup.row(button_a)
+        # markup.row(button_a)
     else:
         pass
-    if len(get_config()['keyboards']['keyboard_1_btn_2']) > 0:
-        btns_btn_b = get_config()['keyboards']['keyboard_1_btn_2']
+    if len(get_config()['keyboards'][f'keyboard_{keyboard_number}_btn_2']) > 0:
+        btns_btn_b = get_config()['keyboards'][f'keyboard_{keyboard_number}_btn_2']
         button_b = types.KeyboardButton(get_config()['buttons'][btns_btn_b])
-        markup.row(button_b)
+        # markup.row(button_b)
     else:
         pass
-    if len(get_config()['keyboards']['keyboard_1_btn_3']) > 0:
-        btns_btn_c = get_config()['keyboards']['keyboard_1_btn_3']
+    if len(get_config()['keyboards'][f'keyboard_{keyboard_number}_btn_3']) > 0:
+        btns_btn_c = get_config()['keyboards'][f'keyboard_{keyboard_number}_btn_3']
         button_c = types.KeyboardButton(get_config()['buttons'][btns_btn_c])
-        markup.row(button_c)
+        # markup.row(button_c)
     else:
         pass
-    if len(get_config()['keyboards']['keyboard_1_btn_4']) > 0:
-        btns_btn_d = get_config()['keyboards']['keyboard_1_btn_4']
+    if len(get_config()['keyboards'][f'keyboard_{keyboard_number}_btn_4']) > 0:
+        btns_btn_d = get_config()['keyboards'][f'keyboard_{keyboard_number}_btn_4']
         button_d = types.KeyboardButton(get_config()['buttons'][btns_btn_d])
-        markup.row(button_d)
+        # markup.row(button_d)
     else:
         pass
-    if len(get_config()['keyboards']['keyboard_1_btn_5']) > 0:
-        btns_btn_e = get_config()['keyboards']['keyboard_1_btn_5']
+    if len(get_config()['keyboards'][f'keyboard_{keyboard_number}_btn_5']) > 0:
+        btns_btn_e = get_config()['keyboards'][f'keyboard_{keyboard_number}_btn_5']
         button_e = types.KeyboardButton(get_config()['buttons'][btns_btn_e])
-        markup.row(button_e)
+        # markup.row(button_e)
     else:
         pass
-    # markup.row(button_a, button_b, button_c)
-    # markup.row(itembtnc, itembtnd, itembtne)
-    if get_config()["keyboards"]["keyboard_1_ReplyKeyboardRemove"] == "True":
+    markup.row(button_a, button_b)
+    markup.row(button_c, button_d, button_e)
+    if get_config()["keyboards"][f"keyboard_{keyboard_number}_ReplyKeyboardRemove"] == "True":
         markup = types.ReplyKeyboardRemove(selective=True)
     return markup
 
 
-def keyboard_2():
-    markup = types.ReplyKeyboardMarkup()
 
-    if len(get_config()['keyboards']['keyboard_2_btn_1']) > 0:
-        btns_btn_a = get_config()['keyboards']['keyboard_2_btn_1']
-        button_a = types.KeyboardButton(get_config()['buttons'][btns_btn_a])
-        markup.row(button_a)
-    else:
-        pass
-    if len(get_config()['keyboards']['keyboard_2_btn_2']) > 0:
-        btns_btn_b = get_config()['keyboards']['keyboard_2_btn_2']
-        button_b = types.KeyboardButton(get_config()['buttons'][btns_btn_b])
-        markup.row(button_b)
-    else:
-        pass
-    if len(get_config()['keyboards']['keyboard_2_btn_3']) > 0:
-        btns_btn_c = get_config()['keyboards']['keyboard_2_btn_3']
-        button_c = types.KeyboardButton(get_config()['buttons'][btns_btn_c])
-        markup.row(button_c)
-    else:
-        pass
-    if len(get_config()['keyboards']['keyboard_2_btn_4']) > 0:
-        btns_btn_d = get_config()['keyboards']['keyboard_2_btn_4']
-        button_d = types.KeyboardButton(get_config()['buttons'][btns_btn_d])
-        markup.row(button_d)
-    else:
-        pass
-    if len(get_config()['keyboards']['keyboard_2_btn_5']) > 0:
-        btns_btn_e = get_config()['keyboards']['keyboard_2_btn_5']
-        button_e = types.KeyboardButton(get_config()['buttons'][btns_btn_e])
-        markup.row(button_e)
-    else:
-        pass
-    # markup.row(button_a, button_b, button_c)
-    # markup.row(itembtnc, itembtnd, itembtne)
-    if get_config()["keyboards"]["keyboard_2_ReplyKeyboardRemove"] == "True":
-        markup = types.ReplyKeyboardRemove(selective=True)
-    return markup
+def get_keyboard_reply_markup(btn):
+    if get_config()['button_belong_keyboard'][btn] == "keyboard_1":
+        reply_markup = keyboard("1")
+    if get_config()['button_belong_keyboard'][btn] == "keyboard_2":
+        reply_markup = keyboard("2")
+    if get_config()['button_belong_keyboard'][btn] == "keyboard_3":
+        reply_markup = keyboard("3")
+    if get_config()['button_belong_keyboard'][btn] == "keyboard_4":
+        reply_markup = keyboard("4")
+    if get_config()['button_belong_keyboard'][btn] == "keyboard_5":
+        reply_markup = keyboard("5")
 
-
-def keyboard_3():
-    markup = types.ReplyKeyboardMarkup()
-
-    if len(get_config()['keyboards']['keyboard_3_btn_1']) > 0:
-        btns_btn_a = get_config()['keyboards']['keyboard_3_btn_1']
-        button_a = types.KeyboardButton(get_config()['buttons'][btns_btn_a])
-        markup.row(button_a)
-    else:
-        pass
-    if len(get_config()['keyboards']['keyboard_3_btn_2']) > 0:
-        btns_btn_b = get_config()['keyboards']['keyboard_3_btn_2']
-        button_b = types.KeyboardButton(get_config()['buttons'][btns_btn_b])
-        markup.row(button_b)
-    else:
-        pass
-    if len(get_config()['keyboards']['keyboard_3_btn_3']) > 0:
-        btns_btn_c = get_config()['keyboards']['keyboard_3_btn_3']
-        button_c = types.KeyboardButton(get_config()['buttons'][btns_btn_c])
-        markup.row(button_c)
-    else:
-        pass
-    if len(get_config()['keyboards']['keyboard_3_btn_4']) > 0:
-        btns_btn_d = get_config()['keyboards']['keyboard_3_btn_4']
-        button_d = types.KeyboardButton(get_config()['buttons'][btns_btn_d])
-        markup.row(button_d)
-    else:
-        pass
-    if len(get_config()['keyboards']['keyboard_3_btn_5']) > 0:
-        btns_btn_e = get_config()['keyboards']['keyboard_3_btn_5']
-        button_e = types.KeyboardButton(get_config()['buttons'][btns_btn_e])
-        markup.row(button_e)
-    else:
-        pass
-    # markup.row(button_a, button_b, button_c)
-    # markup.row(itembtnc, itembtnd, itembtne)
-    if get_config()["keyboards"]["keyboard_3_ReplyKeyboardRemove"] == "True":
-        markup = types.ReplyKeyboardRemove(selective=True)
-    return markup
-
-
-def keyboard_4():
-    markup = types.ReplyKeyboardMarkup()
-
-    if len(get_config()['keyboards']['keyboard_4_btn_1']) > 0:
-        btns_btn_a = get_config()['keyboards']['keyboard_4_btn_1']
-        button_a = types.KeyboardButton(get_config()['buttons'][btns_btn_a])
-        markup.row(button_a)
-    else:
-        pass
-    if len(get_config()['keyboards']['keyboard_4_btn_2']) > 0:
-        btns_btn_b = get_config()['keyboards']['keyboard_4_btn_2']
-        button_b = types.KeyboardButton(get_config()['buttons'][btns_btn_b])
-        markup.row(button_b)
-    else:
-        pass
-    if len(get_config()['keyboards']['keyboard_4_btn_3']) > 0:
-        btns_btn_c = get_config()['keyboards']['keyboard_4_btn_3']
-        button_c = types.KeyboardButton(get_config()['buttons'][btns_btn_c])
-        markup.row(button_c)
-    else:
-        pass
-    if len(get_config()['keyboards']['keyboard_4_btn_4']) > 0:
-        btns_btn_d = get_config()['keyboards']['keyboard_4_btn_4']
-        button_d = types.KeyboardButton(get_config()['buttons'][btns_btn_d])
-        markup.row(button_d)
-    else:
-        pass
-    if len(get_config()['keyboards']['keyboard_4_btn_5']) > 0:
-        btns_btn_e = get_config()['keyboards']['keyboard_4_btn_5']
-        button_e = types.KeyboardButton(get_config()['buttons'][btns_btn_e])
-        markup.row(button_e)
-    else:
-        pass
-    # markup.row(button_a, button_b, button_c)
-    # markup.row(itembtnc, itembtnd, itembtne)
-    if get_config()["keyboards"]["keyboard_4_ReplyKeyboardRemove"] == "True":
-        markup = types.ReplyKeyboardRemove(selective=True)
-    return markup
-
-
-def keyboard_5():
-    markup = types.ReplyKeyboardMarkup()
-
-    if len(get_config()['keyboards']['keyboard_5_btn_1']) > 0:
-        btns_btn_a = get_config()['keyboards']['keyboard_5_btn_1']
-        button_a = types.KeyboardButton(get_config()['buttons'][btns_btn_a])
-        markup.row(button_a)
-    else:
-        pass
-    if len(get_config()['keyboards']['keyboard_5_btn_2']) > 0:
-        btns_btn_b = get_config()['keyboards']['keyboard_5_btn_2']
-        button_b = types.KeyboardButton(get_config()['buttons'][btns_btn_b])
-        markup.row(button_b)
-    else:
-        pass
-    if len(get_config()['keyboards']['keyboard_5_btn_3']) > 0:
-        btns_btn_c = get_config()['keyboards']['keyboard_5_btn_3']
-        button_c = types.KeyboardButton(get_config()['buttons'][btns_btn_c])
-        markup.row(button_c)
-    else:
-        pass
-    if len(get_config()['keyboards']['keyboard_5_btn_4']) > 0:
-        btns_btn_d = get_config()['keyboards']['keyboard_5_btn_4']
-        button_d = types.KeyboardButton(get_config()['buttons'][btns_btn_d])
-        markup.row(button_d)
-    else:
-        pass
-    if len(get_config()['keyboards']['keyboard_5_btn_5']) > 0:
-        btns_btn_e = get_config()['keyboards']['keyboard_5_btn_5']
-        button_e = types.KeyboardButton(get_config()['buttons'][btns_btn_e])
-        markup.row(button_e)
-    else:
-        pass
-    # markup.row(button_a, button_b, button_c)
-    # markup.row(itembtnc, itembtnd, itembtne)
-    if get_config()["keyboards"]["keyboard_5_ReplyKeyboardRemove"] == "True":
-        markup = types.ReplyKeyboardRemove(selective=True)
-    return markup
+    return reply_markup
 
 
 #####################################################
@@ -324,21 +187,6 @@ def get_order_data_8(message, one, two, three, four, five, six, seven, eight):
     bot.send_message(message.from_user.id, text=f"{one}, {two}, {three}, {four}, {five}, {six}, {seven}, {eight}, {nine}", reply_markup=get_keyboard_reply_markup('main_menu_button'))
     # bot.send_message(931750534, text=f"{one}\n{two}\n{three}\n{four}\n{five}\n{six}\n{seven}\n{eight}\n{nine}", reply_markup=get_keyboard_reply_markup('main_menu_button'))
 
-
-
-def get_keyboard_reply_markup(btn):
-    if get_config()['button_belong_keyboard'][btn] == "keyboard_1":
-        reply_markup = keyboard_1()
-    if get_config()['button_belong_keyboard'][btn] == "keyboard_2":
-        reply_markup = keyboard_2()
-    if get_config()['button_belong_keyboard'][btn] == "keyboard_3":
-        reply_markup = keyboard_3()
-    if get_config()['button_belong_keyboard'][btn] == "keyboard_4":
-        reply_markup = keyboard_4()
-    if get_config()['button_belong_keyboard'][btn] == "keyboard_5":
-        reply_markup = keyboard_5()
-
-    return reply_markup
 
 
 #######################################################################################################################################################
