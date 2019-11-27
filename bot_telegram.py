@@ -116,79 +116,74 @@ def leave_order(message):
         bot.register_next_step_handler(message, cancel)
     else:
         send_typing(message)
-        bot.register_next_step_handler(message, leave_order_0_0)
-
-def leave_order_0_0(message):
-    zero = message.text
-    send_typing(message)
-    bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_2'])
-    bot.register_next_step_handler(message, leave_order_0, zero)
+        bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_1'])
+        bot.register_next_step_handler(message, leave_order_0)
 
 
-def leave_order_0(message, zero):
+def leave_order_0(message):
     one = message.text
     send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_2'])
-    bot.register_next_step_handler(message, leave_order_1, zero, one)
+    bot.register_next_step_handler(message, leave_order_1, one)
 
 
-def leave_order_1(message, zero, one):
+def leave_order_1(message, one):
     two = message.text
     send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_3'])
-    bot.register_next_step_handler(message, leave_order_2, zero, one, two)
+    bot.register_next_step_handler(message, leave_order_2, one, two)
 
-def leave_order_2(message, zero, one, two):
+def leave_order_2(message, one, two):
     three = message.text
     send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_4'])
-    bot.register_next_step_handler(message, leave_order_3, zero, one, two, three)
+    bot.register_next_step_handler(message, leave_order_3, one, two, three)
 
 
-def leave_order_3(message, zero, one, two, three):
+def leave_order_3(message, one, two, three):
     four = message.text
     send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_5'])
-    bot.register_next_step_handler(message, leave_order_4, zero, one, two, three, four)
+    bot.register_next_step_handler(message, leave_order_4, one, two, three, four)
 
 
-def leave_order_4(message, zero, one, two, three, four):
+def leave_order_4(message, one, two, three, four):
     five = message.text
     send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_6'])
-    bot.register_next_step_handler(message, leave_order_5, zero, one, two, three, four, five)
+    bot.register_next_step_handler(message, leave_order_5, one, two, three, four, five)
 
 
-def leave_order_5(message, zero, one, two, three, four, five):
+def leave_order_5(message, one, two, three, four, five):
     six = message.text
     send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_7'])
-    bot.register_next_step_handler(message, leave_order_6, zero, one, two, three, four, five, six)
+    bot.register_next_step_handler(message, leave_order_6, one, two, three, four, five, six)
 
 
-def leave_order_6(message, zero, one, two, three, four, five, six):
+def leave_order_6(message, one, two, three, four, five, six):
     seven = message.text
     send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_8'])
-    bot.register_next_step_handler(message, leave_order_7, zero, one, two, three, four, five, six, seven)
+    bot.register_next_step_handler(message, leave_order_7, one, two, three, four, five, six, seven)
 
 
-def leave_order_7(message, zero, one, two, three, four, five, six, seven):
+def leave_order_7(message, one, two, three, four, five, six, seven):
     eight = message.text
     send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_9'])
-    bot.register_next_step_handler(message, leave_order_8, zero, one, two, three, four, five, six, seven, eight)
+    bot.register_next_step_handler(message, leave_order_8, one, two, three, four, five, six, seven, eight)
 
 
-def leave_order_8(message, zero, one, two, three, four, five, six, seven, eight):
+def leave_order_8(message, one, two, three, four, five, six, seven, eight):
     nine = message.text
     send_typing(message)
 
-    send_email(f"{zero}, {one}, {two}, {three}, {four}, {five}, {six}, {seven}, {eight}, {nine}")
+    send_email(f"{one}, {two}, {three}, {four}, {five}, {six}, {seven}, {eight}, {nine}")
 
     bot.send_message(message.from_user.id, text=get_config()['order_data']['thanks_for_order'], reply_markup=get_keyboard_reply_markup('btn1'))
     # send_typing(message)
-    bot.send_message(message.from_user.id, text=f"{zero}, {one}, {two}, {three}, {four}, {five}, {six}, {seven}, {eight}, {nine}", reply_markup=get_keyboard_reply_markup('btn1'))
+    # bot.send_message(message.from_user.id, text=f"{one}, {two}, {three}, {four}, {five}, {six}, {seven}, {eight}, {nine}", reply_markup=get_keyboard_reply_markup('btn1'))
     # bot.send_message(931750534, text=f"{one}\n{two}\n{three}\n{four}\n{five}\n{six}\n{seven}\n{eight}\n{nine}", reply_markup=get_keyboard_reply_markup('btn1'))
 
 
