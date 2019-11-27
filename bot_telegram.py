@@ -1,13 +1,9 @@
-import json
-
 import telebot
 from telebot import types
+from config import get_config
+from notification import send_email
 
 
-def get_config():
-    with open("config.json", "r") as read_file:
-        config = json.load(read_file)
-        return config
 
 # https://github.com/python-telegram-bot/python-telegram-bot
 bot = telebot.TeleBot(get_config()["telegram_bot_token"])
@@ -113,7 +109,7 @@ def get_keyboard_reply_markup(btn):
 
 ############# Order data ##############################################################################################################################
 
-def get_order_data(message):
+def leave_order(message):
     if message.text == get_config()['buttons']['btn4']:
         send_typing(message)
         bot.send_message(message.from_user.id, text=get_config()['messages']['msg4'][1], reply_markup=get_keyboard_reply_markup('btn1'))
@@ -121,71 +117,112 @@ def get_order_data(message):
     else:
         send_typing(message)
         bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_1'])
-        zero = message.text
-        bot.register_next_step_handler(message, get_order_data_0, zero)
+        bot.register_next_step_handler(message, leave_order_0_0)
 
-def get_order_data_0(message, zero):
+def leave_order_0_0(message):
+    zero = message.text
+    send_typing(message)
+    bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_2'])
+    bot.register_next_step_handler(message, leave_order_0, zero)
+
+
+def leave_order_0(message, zero):
     one = message.text
     send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_2'])
-    bot.register_next_step_handler(message, get_order_data_1, zero, one)
+    bot.register_next_step_handler(message, leave_order_1, zero, one)
 
 
-def get_order_data_1(message, zero, one):
+def leave_order_1(message, zero, one):
     two = message.text
     send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_3'])
-    bot.register_next_step_handler(message, get_order_data_2, zero, one, two)
+    bot.register_next_step_handler(message, leave_order_2, zero, one, two)
 
-def get_order_data_2(message, zero, one, two):
+def leave_order_2(message, zero, one, two):
     three = message.text
     send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_4'])
-    bot.register_next_step_handler(message, get_order_data_3, zero, one, two, three)
+    bot.register_next_step_handler(message, leave_order_3, zero, one, two, three)
 
 
-def get_order_data_3(message, zero, one, two, three):
+def leave_order_3(message, zero, one, two, three):
     four = message.text
     send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_5'])
-    bot.register_next_step_handler(message, get_order_data_4, zero, one, two, three, four)
+    bot.register_next_step_handler(message, leave_order_4, zero, one, two, three, four)
 
 
-def get_order_data_4(message, zero, one, two, three, four):
+def leave_order_4(message, zero, one, two, three, four):
     five = message.text
     send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_6'])
-    bot.register_next_step_handler(message, get_order_data_5, zero, one, two, three, four, five)
+    bot.register_next_step_handler(message, leave_order_5, zero, one, two, three, four, five)
 
 
-def get_order_data_5(message, zero, one, two, three, four, five):
+def leave_order_5(message, zero, one, two, three, four, five):
     six = message.text
     send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_7'])
-    bot.register_next_step_handler(message, get_order_data_6, zero, one, two, three, four, five, six)
+    bot.register_next_step_handler(message, leave_order_6, zero, one, two, three, four, five, six)
 
 
-def get_order_data_6(message, zero, one, two, three, four, five, six):
+def leave_order_6(message, zero, one, two, three, four, five, six):
     seven = message.text
     send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_8'])
-    bot.register_next_step_handler(message, get_order_data_7, zero, one, two, three, four, five, six, seven)
+    bot.register_next_step_handler(message, leave_order_7, zero, one, two, three, four, five, six, seven)
 
 
-def get_order_data_7(message, zero, one, two, three, four, five, six, seven):
+def leave_order_7(message, zero, one, two, three, four, five, six, seven):
     eight = message.text
     send_typing(message)
     bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_9'])
-    bot.register_next_step_handler(message, get_order_data_8, zero, one, two, three, four, five, six, seven, eight)
+    bot.register_next_step_handler(message, leave_order_8, zero, one, two, three, four, five, six, seven, eight)
 
 
-def get_order_data_8(message, zero, one, two, three, four, five, six, seven, eight):
+def leave_order_8(message, zero, one, two, three, four, five, six, seven, eight):
     nine = message.text
     send_typing(message)
+
+    send_email(f"{zero}, {one}, {two}, {three}, {four}, {five}, {six}, {seven}, {eight}, {nine}")
+
     bot.send_message(message.from_user.id, text=get_config()['order_data']['thanks_for_order'], reply_markup=get_keyboard_reply_markup('btn1'))
-    send_typing(message)
+    # send_typing(message)
     bot.send_message(message.from_user.id, text=f"{zero}, {one}, {two}, {three}, {four}, {five}, {six}, {seven}, {eight}, {nine}", reply_markup=get_keyboard_reply_markup('btn1'))
     # bot.send_message(931750534, text=f"{one}\n{two}\n{three}\n{four}\n{five}\n{six}\n{seven}\n{eight}\n{nine}", reply_markup=get_keyboard_reply_markup('btn1'))
+
+
+
+############### Name and Phone #############################################################################################################################
+
+def leave_contacts(message):
+    if message.text == get_config()['buttons']['btn4']:
+        send_typing(message)
+        bot.send_message(message.from_user.id, text=get_config()['messages']['msg4'][1])
+        bot.register_next_step_handler(message, cancel)
+    else:
+        name = message.text
+        send_typing(message)
+        bot.send_message(message.from_user.id, text=f"{get_config()['order_data']['phone']}")
+        bot.register_next_step_handler(message, get_user_phone, name)
+
+
+def get_user_phone(message, name):
+    phone = message.text
+    send_typing(message)
+    # bot.send_message(message.from_user.id, text=f"{get_config()['order_data']['name']}: {name}\n{get_config()['order_data']['phone']}: {phone}", reply_markup=get_keyboard_reply_markup('btn1'))
+    # bot.send_message(931750534, text=f"{name} {phone}", reply_markup=get_keyboard_reply_markup('btn1'))
+
+    send_email(f"{name}, {phone}")
+
+    bot.send_message(message.from_user.id, text=get_config()['order_data']['tnahks'], reply_markup=get_keyboard_reply_markup('btn1'))
+
+####################   Cancel Button  ###############################################################################################################
+
+def cancel(message):
+    send_typing(message)
+    bot.send_message(message.from_user.id, text=get_config()['messages']['msg1'], reply_markup=get_keyboard_reply_markup('btn13'))
 
 
 ################ Media Buttons #########################################################################################################################
@@ -226,32 +263,6 @@ def send_audio(message):
 # sendLocation
 # bot.send_location(chat_id, lat, lon)
 
-############### Name and Phone #############################################################################################################################
-
-def get_user_name(message):
-    if message.text == get_config()['buttons']['btn4']:
-        send_typing(message)
-        bot.send_message(message.from_user.id, text=get_config()['messages']['msg4'][1])
-        bot.register_next_step_handler(message, cancel)
-    else:
-        name = message.text
-        send_typing(message)
-        bot.send_message(message.from_user.id, text=f"{get_config()['order_data']['phone']} ?")
-        bot.register_next_step_handler(message, get_user_phone, name)
-
-
-def get_user_phone(message, name):
-    phone = message.text
-    send_typing(message)
-    bot.send_message(message.from_user.id, text=f"{get_config()['order_data']['name']}: {name}\n{get_config()['order_data']['phone']}: {phone}", reply_markup=get_keyboard_reply_markup('btn1'))
-    # bot.send_message(931750534, text=f"{name} {phone}", reply_markup=get_keyboard_reply_markup('btn1'))
-
-
-####################   Cancel Button  ###############################################################################################################
-
-def cancel(message):
-    send_typing(message)
-    bot.send_message(message.from_user.id, text=get_config()['messages']['msg1'], reply_markup=get_keyboard_reply_markup('btn13'))
 
 ###########################################################################################################################################################
 
