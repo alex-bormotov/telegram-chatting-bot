@@ -116,7 +116,6 @@ def leave_order(message):
         bot.register_next_step_handler(message, cancel)
     else:
         send_typing(message)
-        bot.send_message(message.from_user.id, text=get_config()['order_data']['ord_question_1'])
         bot.register_next_step_handler(message, leave_order_0_0)
 
 def leave_order_0_0(message):
