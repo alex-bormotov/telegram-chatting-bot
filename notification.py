@@ -19,5 +19,5 @@ def send_email(message):
         server.sendmail(sender_email, receiver_email, message)
 
     except Exception as e:
-        # pass
-        print(e)
+        pass
+        # print(e)
