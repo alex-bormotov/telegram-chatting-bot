@@ -2,13 +2,13 @@ import json
 import requests
 from flask import Flask, request
 
-from config import get_config
+from config import get_fb_config
 
 app = Flask(__name__)
 
-FB_API_URL = get_config()['fb_api_url']
-VERIFY_TOKEN = get_config()['fb_verify_token']
-PAGE_ACCESS_TOKEN = get_config()['page_access_token']
+FB_API_URL = get_fb_config()['fb_api_url']
+VERIFY_TOKEN = get_fb_config()['fb_verify_token']
+PAGE_ACCESS_TOKEN = get_fb_config()['page_access_token']
 
 def verify_webhook(req):
     if req.args.get("hub.verify_token") == VERIFY_TOKEN:
@@ -29,7 +29,7 @@ def is_user_message(message):
 def get_bot_response(message):
     """This is just a dummy function, returning a variation of what
     the user said. Replace this function with one connected to chatbot."""
-    return "This is a dummy response to '{}'".format(message)
+    return message
 
 
 def respond(sender, message):

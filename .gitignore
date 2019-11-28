@@ -104,3 +104,6 @@ venv.bak/
 .mypy_cache/
 config.json
 .DS_Store
+config_email.json
+config_fb.json
+config_telegram.json
