@@ -10,24 +10,13 @@ FB_API_URL = get_config()['fb_api_url']
 VERIFY_TOKEN = get_config()['fb_verify_token']
 PAGE_ACCESS_TOKEN = get_config()['page_access_token']
 
-
-def get_bot_response(message):
-    """This is just a dummy function, returning a variation of what
-    the user said. Replace this function with one connected to chatbot."""
-    return "This is a dummy response to '{}'".format(message)
-
-
 def verify_webhook(req):
     if req.args.get("hub.verify_token") == VERIFY_TOKEN:
         return req.args.get("hub.challenge")
     else:
         return "incorrect"
 
-def respond(sender, message):
-    """Formulate a response to the user and
-    pass it on to a function that sends it."""
-    response = get_bot_response(message)
-    send_message(sender, response)
+################################################################################
 
 
 def is_user_message(message):
@@ -37,12 +26,47 @@ def is_user_message(message):
             not message['message'].get("is_echo"))
 
 
+def get_bot_response(message):
+    """This is just a dummy function, returning a variation of what
+    the user said. Replace this function with one connected to chatbot."""
+    return "This is a dummy response to '{}'".format(message)
+
+
+def respond(sender, message):
+    """Formulate a response to the user and
+    pass it on to a function that sends it."""
+    response = get_bot_response(message)
+    send_message(sender, response)
+
+
 def send_message(recipient_id, text):
     """Send a response to Facebook"""
     payload = {
-        'message': {
-            'text': text
-        },
+          "message":{
+            "attachment":{
+              "type":"template",
+              "payload":{
+                "template_type":"button",
+                "text": text,
+                "buttons":[
+                  {
+                    "type":"web_url",
+                    "url":"https://alexbormotov.com",
+                    "title":"My web site"
+                  },
+                  {
+                     "type":"phone_number",
+                     "title":"My phone",
+                     "payload":"+13231234567"
+                  },
+                  {
+                     "type": "account_link",
+                     "url": "https://fb.com"
+                  }
+                ]
+              }
+            }
+          },
         'recipient': {
             'id': recipient_id
         },
