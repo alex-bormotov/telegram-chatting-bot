@@ -52,8 +52,6 @@ def get_keyboard_reply_markup(btn):
             f"keyboard_{get_telegram_config()['button_belong_keyboard'][btn][9:]}_btn_1"
         ]
         button_a = types.KeyboardButton(get_telegram_config()["buttons"][btns_btn_a])
-        # markup.row(button_a)
-
     else:
         pass
     if (
@@ -68,7 +66,6 @@ def get_keyboard_reply_markup(btn):
             f"keyboard_{get_telegram_config()['button_belong_keyboard'][btn][9:]}_btn_2"
         ]
         button_b = types.KeyboardButton(get_telegram_config()["buttons"][btns_btn_b])
-        # markup.row(button_b)
     else:
         pass
     if (
@@ -83,7 +80,6 @@ def get_keyboard_reply_markup(btn):
             f"keyboard_{get_telegram_config()['button_belong_keyboard'][btn][9:]}_btn_3"
         ]
         button_c = types.KeyboardButton(get_telegram_config()["buttons"][btns_btn_c])
-        # markup.row(button_c)
     else:
         pass
     if (
@@ -98,7 +94,6 @@ def get_keyboard_reply_markup(btn):
             f"keyboard_{get_telegram_config()['button_belong_keyboard'][btn][9:]}_btn_4"
         ]
         button_d = types.KeyboardButton(get_telegram_config()["buttons"][btns_btn_d])
-        # markup.row(button_d)
     else:
         pass
     if (
@@ -113,7 +108,6 @@ def get_keyboard_reply_markup(btn):
             f"keyboard_{get_telegram_config()['button_belong_keyboard'][btn][9:]}_btn_5"
         ]
         button_e = types.KeyboardButton(get_telegram_config()["buttons"][btns_btn_e])
-        # markup.row(button_e)
     else:
         pass
     markup.row(button_a, button_b)
@@ -128,10 +122,36 @@ def get_keyboard_reply_markup(btn):
     return markup
 
 
-############# Order data ##############################################################################################################################
+############# Order and Contact ##############################################################################################################################
+curent_step = 0
 
 
-def leave_order(message):
+def get_step(question_form):
+    global curent_step
+
+    total_steps = int(
+        [k[9:] for k, v in get_telegram_config()[question_form].items()][-1]
+    )
+    if curent_step <= total_steps:
+
+        steps = (
+            [k for k, v in get_telegram_config()[question_form].items()][curent_step],
+            total_steps,
+        )
+        curent_step += 1
+        if curent_step == total_steps:
+            curent_step = 0
+    return steps
+
+
+answers_question_form_2 = []
+question_form_2_count = 0
+
+
+def question_form_2(message):
+    global answers_question_form_2
+    global question_form_2_count
+
     if (
         message.text
         == get_telegram_config()["buttons"][
@@ -149,115 +169,38 @@ def leave_order(message):
         bot.register_next_step_handler(message, cancel)
     else:
         send_typing(message)
-        bot.send_message(
-            message.from_user.id,
-            text=get_telegram_config()["order_data"]["ord_question_1"],
-        )
-        bot.register_next_step_handler(message, leave_order_0)
+        data = get_step("question_form_2")
+        question_form_2_count += 1
+        if question_form_2_count <= data[1]:
+            bot.send_message(
+                message.from_user.id,
+                text=get_telegram_config()["question_form_2"][data[0]],
+            )
+            answers_question_form_2.append(message.text)
+            bot.register_next_step_handler(message, question_form_2)
+        else:
+            bot.send_message(
+                message.from_user.id,
+                text=get_telegram_config()["built_in"]["thanks_question_form_2"],
+                reply_markup=get_keyboard_reply_markup(
+                    get_telegram_config()["built_in"]["main_keyboard"]
+                ),
+            )
+            answers_question_form_2.remove(answers_question_form_2[0])
+            send_email(str(answers_question_form_2))
+            answers_question_form_2 = []
+            question_form_2_count = 0
+            bot.register_next_step_handler(message, handler)
 
 
-def leave_order_0(message):
-    one = message.text
-    send_typing(message)
-    bot.send_message(
-        message.from_user.id, text=get_telegram_config()["order_data"]["ord_question_2"]
-    )
-    bot.register_next_step_handler(message, leave_order_1, one)
+answers_question_form_1 = []
+question_form_1_count = 0
 
 
-def leave_order_1(message, one):
-    two = message.text
-    send_typing(message)
-    bot.send_message(
-        message.from_user.id, text=get_telegram_config()["order_data"]["ord_question_3"]
-    )
-    bot.register_next_step_handler(message, leave_order_2, one, two)
+def question_form_1(message):
+    global answers_question_form_1
+    global question_form_1_count
 
-
-def leave_order_2(message, one, two):
-    three = message.text
-    send_typing(message)
-    bot.send_message(
-        message.from_user.id, text=get_telegram_config()["order_data"]["ord_question_4"]
-    )
-    bot.register_next_step_handler(message, leave_order_3, one, two, three)
-
-
-def leave_order_3(message, one, two, three):
-    four = message.text
-    send_typing(message)
-    bot.send_message(
-        message.from_user.id, text=get_telegram_config()["order_data"]["ord_question_5"]
-    )
-    bot.register_next_step_handler(message, leave_order_4, one, two, three, four)
-
-
-def leave_order_4(message, one, two, three, four):
-    five = message.text
-    send_typing(message)
-    bot.send_message(
-        message.from_user.id, text=get_telegram_config()["order_data"]["ord_question_6"]
-    )
-    bot.register_next_step_handler(message, leave_order_5, one, two, three, four, five)
-
-
-def leave_order_5(message, one, two, three, four, five):
-    six = message.text
-    send_typing(message)
-    bot.send_message(
-        message.from_user.id, text=get_telegram_config()["order_data"]["ord_question_7"]
-    )
-    bot.register_next_step_handler(
-        message, leave_order_6, one, two, three, four, five, six
-    )
-
-
-def leave_order_6(message, one, two, three, four, five, six):
-    seven = message.text
-    send_typing(message)
-    bot.send_message(
-        message.from_user.id, text=get_telegram_config()["order_data"]["ord_question_8"]
-    )
-    bot.register_next_step_handler(
-        message, leave_order_7, one, two, three, four, five, six, seven
-    )
-
-
-def leave_order_7(message, one, two, three, four, five, six, seven):
-    eight = message.text
-    send_typing(message)
-    bot.send_message(
-        message.from_user.id, text=get_telegram_config()["order_data"]["ord_question_9"]
-    )
-    bot.register_next_step_handler(
-        message, leave_order_8, one, two, three, four, five, six, seven, eight
-    )
-
-
-def leave_order_8(message, one, two, three, four, five, six, seven, eight):
-    nine = message.text
-    send_typing(message)
-
-    send_email(
-        f"{one}, {two}, {three}, {four}, {five}, {six}, {seven}, {eight}, {nine}"
-    )
-
-    bot.send_message(
-        message.from_user.id,
-        text=get_telegram_config()["built_in"]["thanks_for_order"],
-        reply_markup=get_keyboard_reply_markup(
-            get_telegram_config()["built_in"]["main_keyboard"]
-        ),
-    )
-    # send_typing(message)
-    # bot.send_message(message.from_user.id, text=f"{one}, {two}, {three}, {four}, {five}, {six}, {seven}, {eight}, {nine}", reply_markup=get_keyboard_reply_markup('btn1'))
-    # bot.send_message(931750534, text=f"{one}\n{two}\n{three}\n{four}\n{five}\n{six}\n{seven}\n{eight}\n{nine}", reply_markup=get_keyboard_reply_markup('btn1'))
-
-
-############### Name and Phone #############################################################################################################################
-
-
-def leave_contacts(message):
     if (
         message.text
         == get_telegram_config()["buttons"][
@@ -268,32 +211,35 @@ def leave_contacts(message):
         bot.send_message(
             message.from_user.id,
             text=get_telegram_config()["built_in"]["cancel_message"],
+            reply_markup=get_keyboard_reply_markup(
+                get_telegram_config()["built_in"]["main_keyboard"]
+            ),
         )
         bot.register_next_step_handler(message, cancel)
     else:
-        name = message.text
         send_typing(message)
-        bot.send_message(
-            message.from_user.id, text=f"{get_telegram_config()['built_in']['phone']}"
-        )
-        bot.register_next_step_handler(message, get_user_phone, name)
-
-
-def get_user_phone(message, name):
-    phone = message.text
-    send_typing(message)
-    # bot.send_message(message.from_user.id, text=f"{get_telegram_config()['order_data']['name']}: {name}\n{get_telegram_config()['order_data']['phone']}: {phone}", reply_markup=get_keyboard_reply_markup('btn1'))
-    # bot.send_message(931750534, text=f"{name} {phone}", reply_markup=get_keyboard_reply_markup('btn1'))
-
-    send_email(f"{name}, {phone}")
-
-    bot.send_message(
-        message.from_user.id,
-        text=get_telegram_config()["built_in"]["tnahks"],
-        reply_markup=get_keyboard_reply_markup(
-            get_telegram_config()["built_in"]["main_keyboard"]
-        ),
-    )
+        data = get_step("question_form_1")
+        question_form_1_count += 1
+        if question_form_1_count <= data[1]:
+            bot.send_message(
+                message.from_user.id,
+                text=get_telegram_config()["question_form_1"][data[0]],
+            )
+            answers_question_form_1.append(message.text)
+            bot.register_next_step_handler(message, question_form_1)
+        else:
+            bot.send_message(
+                message.from_user.id,
+                text=get_telegram_config()["built_in"]["thanks_question_form_1"],
+                reply_markup=get_keyboard_reply_markup(
+                    get_telegram_config()["built_in"]["main_keyboard"]
+                ),
+            )
+            answers_question_form_1.remove(answers_question_form_1[0])
+            send_email(str(answers_question_form_1))
+            answers_question_form_1 = []
+            question_form_1_count = 0
+            bot.register_next_step_handler(message, handler)
 
 
 ####################   Cancel Button  ###############################################################################################################
@@ -316,8 +262,6 @@ def cancel(message):
 
 
 def send_image(message):
-    # sendPhoto
-    # print(message.from_user.id)
     send_typing_image(message)
     photo = open("media_samples/image.jpg", "rb")
     bot.send_photo(
@@ -327,12 +271,10 @@ def send_image(message):
             get_telegram_config()["built_in"]["main_keyboard"]
         ),
     )
-    # bot.send_photo(message.from_user.id, "FILEID")
 
 
 def send_video(message):
-
-    # send_typing_video(message)
+    send_typing_video(message)
     video = open("media_samples/video.mp4", "rb")
     bot.send_video(
         message.from_user.id,
@@ -341,13 +283,10 @@ def send_video(message):
             get_telegram_config()["built_in"]["main_keyboard"]
         ),
     )
-    # bot.send_video(message.from_user.id, "FILEID")
 
 
 def send_audio(message):
-
-    # sendAudio
-    # send_typing_audio(message)
+    send_typing_audio(message)
     audio = open("media_samples/audio.mp3", "rb")
     bot.send_audio(
         message.from_user.id,
@@ -356,16 +295,6 @@ def send_audio(message):
             get_telegram_config()["built_in"]["main_keyboard"]
         ),
     )
-    # bot.send_audio(message.from_user.id, "FILEID")
-
-    # sendVoice
-    # voice = open('/tmp/voice.ogg', 'rb')
-    # bot.send_voice(chat_id, voice)
-    # bot.send_voice(chat_id, "FILEID")
-
-
-# sendLocation
-# bot.send_location(chat_id, lat, lon)
 
 
 ###########################################################################################################################################################
@@ -381,7 +310,6 @@ def send_welcome(message):
             get_telegram_config()["built_in"]["main_menu"]
         ),
     )
-    # bot.register_next_step_handler(message, handler)
 
 
 @bot.message_handler(content_types=["text"])

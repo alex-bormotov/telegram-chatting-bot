@@ -1,6 +1,6 @@
 {
   "ALLOWED_FUNCTIONS": "TYPE IT IN FORMAT LIKE ['function', 'message'], FOR INSTANCE ['contact', 'Hello, type you name and phone, we will call you']",
-  "ALLOWED_FUNCTIONS_": "leave_contacts, leave_order, send_image, send_audio, send_video, cancel",
+  "ALLOWED_FUNCTIONS_": "question_form_1, question_form_2, send_image, send_audio, send_video, cancel",
   "END_INFO_INFO_INFO": "______________________________________________________________________________________________________________________________________________",
 
   "telegram_bot_token": "xxx",
@@ -50,12 +50,12 @@
     "msg9": "",
     "msg10": "",
     "msg11": "",
-    "msg12": ["leave_contacts", ""],
+    "msg12": ["question_form_2", ""],
     "msg13": "",
     "msg14": "",
     "msg15": "https://docs.google.com/forms/d/e/1FAIpQLScsYZWyWUdp25x4-_dM5jj4nsFH0pMtoUkk3qdX4DSxccpEBA/viewform?usp=sf_link",
     "msg16": "",
-    "msg17": ["leave_order", ""],
+    "msg17": ["question_form_1", ""],
     "msg18": ["send_image", "send_image_msg"],
     "msg19": ["send_audio", "send_audio_msg"],
     "msg20": ["send_video", "send_video_msg"],
@@ -71,16 +71,34 @@
     "msg30": ""
   },
 
-  "order_data": {
-    "ord_question_1": "",
-    "ord_question_2": "",
-    "ord_question_3": "",
-    "ord_question_4": "",
-    "ord_question_5": "",
-    "ord_question_6": "",
-    "ord_question_7": "",
-    "ord_question_8": "",
-    "ord_question_9": ""
+  "built_in": {
+    "FOR INSTANCE": "main_menu BUTTON IS EQUAL btn13",
+    "main_menu": "btn13",
+    "main_menu_message": "",
+    "main_keyboard":"btn1",
+    "cancel_button": "btn4",
+    "cancel_message": "",
+    "thanks_question_form_1": "",
+    "thanks_question_form_2": ""
+  },
+
+  "question_form_1": {
+    "question_1": "",
+    "question_2": "",
+    "question_3": "",
+    "question_4": "",
+    "question_5": "",
+    "question_6": "",
+    "question_7": "",
+    "question_8": "",
+    "question_9": ""
+  },
+
+  "question_form_1": {
+    "question_1": "",
+    "question_2": "",
+    "question_3": "",
+    "question_4": ""
   },
 
   "keyboards": {
@@ -174,19 +192,6 @@
     "keyboard_15_btn_3": "",
     "keyboard_15_btn_4": "",
     "keyboard_15_btn_5": ""
-  },
-
-  "built_in": {
-    "FOR INSTANCE": "main_menu BUTTON IS EQUAL btn13",
-    "main_menu": "btn13",
-    "main_menu_message": "",
-    "main_keyboard":"btn1",
-    "cancel_button": "btn4",
-    "cancel_message": "",
-    "name": "",
-    "phone": "",
-    "tnahks": "",
-    "thanks_for_order": ""
   },
 
   "button_belong_keyboard": {
