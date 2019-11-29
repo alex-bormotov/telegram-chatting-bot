@@ -31,7 +31,7 @@ def send_typing_video(message):
 ############### Keyboards #####################################################
 
 
-def keyboard(keyboard_number):
+def get_keyboard_reply_markup(btn):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 
     button_a = ""
@@ -40,42 +40,77 @@ def keyboard(keyboard_number):
     button_d = ""
     button_e = ""
 
-    if len(get_telegram_config()["keyboards"][f"keyboard_{keyboard_number}_btn_1"]) > 0:
+    if (
+        len(
+            get_telegram_config()["keyboards"][
+                f"keyboard_{get_telegram_config()['button_belong_keyboard'][btn][9:]}_btn_1"
+            ]
+        )
+        > 0
+    ):
         btns_btn_a = get_telegram_config()["keyboards"][
-            f"keyboard_{keyboard_number}_btn_1"
+            f"keyboard_{get_telegram_config()['button_belong_keyboard'][btn][9:]}_btn_1"
         ]
         button_a = types.KeyboardButton(get_telegram_config()["buttons"][btns_btn_a])
         # markup.row(button_a)
 
     else:
         pass
-    if len(get_telegram_config()["keyboards"][f"keyboard_{keyboard_number}_btn_2"]) > 0:
+    if (
+        len(
+            get_telegram_config()["keyboards"][
+                f"keyboard_{get_telegram_config()['button_belong_keyboard'][btn][9:]}_btn_2"
+            ]
+        )
+        > 0
+    ):
         btns_btn_b = get_telegram_config()["keyboards"][
-            f"keyboard_{keyboard_number}_btn_2"
+            f"keyboard_{get_telegram_config()['button_belong_keyboard'][btn][9:]}_btn_2"
         ]
         button_b = types.KeyboardButton(get_telegram_config()["buttons"][btns_btn_b])
         # markup.row(button_b)
     else:
         pass
-    if len(get_telegram_config()["keyboards"][f"keyboard_{keyboard_number}_btn_3"]) > 0:
+    if (
+        len(
+            get_telegram_config()["keyboards"][
+                f"keyboard_{get_telegram_config()['button_belong_keyboard'][btn][9:]}_btn_3"
+            ]
+        )
+        > 0
+    ):
         btns_btn_c = get_telegram_config()["keyboards"][
-            f"keyboard_{keyboard_number}_btn_3"
+            f"keyboard_{get_telegram_config()['button_belong_keyboard'][btn][9:]}_btn_3"
         ]
         button_c = types.KeyboardButton(get_telegram_config()["buttons"][btns_btn_c])
         # markup.row(button_c)
     else:
         pass
-    if len(get_telegram_config()["keyboards"][f"keyboard_{keyboard_number}_btn_4"]) > 0:
+    if (
+        len(
+            get_telegram_config()["keyboards"][
+                f"keyboard_{get_telegram_config()['button_belong_keyboard'][btn][9:]}_btn_4"
+            ]
+        )
+        > 0
+    ):
         btns_btn_d = get_telegram_config()["keyboards"][
-            f"keyboard_{keyboard_number}_btn_4"
+            f"keyboard_{get_telegram_config()['button_belong_keyboard'][btn][9:]}_btn_4"
         ]
         button_d = types.KeyboardButton(get_telegram_config()["buttons"][btns_btn_d])
         # markup.row(button_d)
     else:
         pass
-    if len(get_telegram_config()["keyboards"][f"keyboard_{keyboard_number}_btn_5"]) > 0:
+    if (
+        len(
+            get_telegram_config()["keyboards"][
+                f"keyboard_{get_telegram_config()['button_belong_keyboard'][btn][9:]}_btn_5"
+            ]
+        )
+        > 0
+    ):
         btns_btn_e = get_telegram_config()["keyboards"][
-            f"keyboard_{keyboard_number}_btn_5"
+            f"keyboard_{get_telegram_config()['button_belong_keyboard'][btn][9:]}_btn_5"
         ]
         button_e = types.KeyboardButton(get_telegram_config()["buttons"][btns_btn_e])
         # markup.row(button_e)
@@ -83,61 +118,33 @@ def keyboard(keyboard_number):
         pass
     markup.row(button_a, button_b)
     markup.row(button_c, button_d, button_e)
-    if (
-        get_telegram_config()["keyboards"][
-            f"keyboard_{keyboard_number}_ReplyKeyboardRemove"
-        ]
-        == "True"
-    ):
-        markup = types.ReplyKeyboardRemove(selective=True)
+    # if (
+    #     get_telegram_config()["keyboards"][
+    #         f"keyboard_{keyboard_number}_ReplyKeyboardRemove"
+    #     ]
+    #     == "True"
+    # ):
+    #     markup = types.ReplyKeyboardRemove(selective=True)
     return markup
-
-
-def get_keyboard_reply_markup(btn):
-    if get_telegram_config()["button_belong_keyboard"][btn] == "keyboard_1":
-        reply_markup = keyboard("1")
-    if get_telegram_config()["button_belong_keyboard"][btn] == "keyboard_2":
-        reply_markup = keyboard("2")
-    if get_telegram_config()["button_belong_keyboard"][btn] == "keyboard_3":
-        reply_markup = keyboard("3")
-    if get_telegram_config()["button_belong_keyboard"][btn] == "keyboard_4":
-        reply_markup = keyboard("4")
-    if get_telegram_config()["button_belong_keyboard"][btn] == "keyboard_5":
-        reply_markup = keyboard("5")
-    if get_telegram_config()["button_belong_keyboard"][btn] == "keyboard_6":
-        reply_markup = keyboard("6")
-    if get_telegram_config()["button_belong_keyboard"][btn] == "keyboard_7":
-        reply_markup = keyboard("7")
-    if get_telegram_config()["button_belong_keyboard"][btn] == "keyboard_8":
-        reply_markup = keyboard("8")
-    if get_telegram_config()["button_belong_keyboard"][btn] == "keyboard_9":
-        reply_markup = keyboard("9")
-    if get_telegram_config()["button_belong_keyboard"][btn] == "keyboard_10":
-        reply_markup = keyboard("10")
-    if get_telegram_config()["button_belong_keyboard"][btn] == "keyboard_11":
-        reply_markup = keyboard("11")
-    if get_telegram_config()["button_belong_keyboard"][btn] == "keyboard_12":
-        reply_markup = keyboard("12")
-    if get_telegram_config()["button_belong_keyboard"][btn] == "keyboard_13":
-        reply_markup = keyboard("13")
-    if get_telegram_config()["button_belong_keyboard"][btn] == "keyboard_14":
-        reply_markup = keyboard("14")
-    if get_telegram_config()["button_belong_keyboard"][btn] == "keyboard_15":
-        reply_markup = keyboard("15")
-
-    return reply_markup
 
 
 ############# Order data ##############################################################################################################################
 
 
 def leave_order(message):
-    if message.text == get_telegram_config()["buttons"]["btn4"]:
+    if (
+        message.text
+        == get_telegram_config()["buttons"][
+            get_telegram_config()["built_in"]["cancel_button"]
+        ]
+    ):
         send_typing(message)
         bot.send_message(
             message.from_user.id,
-            text=get_telegram_config()["messages"]["msg4"][1],
-            reply_markup=get_keyboard_reply_markup("btn1"),
+            text=get_telegram_config()["built_in"]["cancel_message"],
+            reply_markup=get_keyboard_reply_markup(
+                get_telegram_config()["built_in"]["main_keyboard"]
+            ),
         )
         bot.register_next_step_handler(message, cancel)
     else:
@@ -237,8 +244,10 @@ def leave_order_8(message, one, two, three, four, five, six, seven, eight):
 
     bot.send_message(
         message.from_user.id,
-        text=get_telegram_config()["order_data"]["thanks_for_order"],
-        reply_markup=get_keyboard_reply_markup("btn1"),
+        text=get_telegram_config()["built_in"]["thanks_for_order"],
+        reply_markup=get_keyboard_reply_markup(
+            get_telegram_config()["built_in"]["main_keyboard"]
+        ),
     )
     # send_typing(message)
     # bot.send_message(message.from_user.id, text=f"{one}, {two}, {three}, {four}, {five}, {six}, {seven}, {eight}, {nine}", reply_markup=get_keyboard_reply_markup('btn1'))
@@ -249,17 +258,23 @@ def leave_order_8(message, one, two, three, four, five, six, seven, eight):
 
 
 def leave_contacts(message):
-    if message.text == get_telegram_config()["buttons"]["btn4"]:
+    if (
+        message.text
+        == get_telegram_config()["buttons"][
+            get_telegram_config()["built_in"]["cancel_button"]
+        ]
+    ):
         send_typing(message)
         bot.send_message(
-            message.from_user.id, text=get_telegram_config()["messages"]["msg4"][1]
+            message.from_user.id,
+            text=get_telegram_config()["built_in"]["cancel_message"],
         )
         bot.register_next_step_handler(message, cancel)
     else:
         name = message.text
         send_typing(message)
         bot.send_message(
-            message.from_user.id, text=f"{get_telegram_config()['order_data']['phone']}"
+            message.from_user.id, text=f"{get_telegram_config()['built_in']['phone']}"
         )
         bot.register_next_step_handler(message, get_user_phone, name)
 
@@ -274,8 +289,10 @@ def get_user_phone(message, name):
 
     bot.send_message(
         message.from_user.id,
-        text=get_telegram_config()["order_data"]["tnahks"],
-        reply_markup=get_keyboard_reply_markup("btn1"),
+        text=get_telegram_config()["built_in"]["tnahks"],
+        reply_markup=get_keyboard_reply_markup(
+            get_telegram_config()["built_in"]["main_keyboard"]
+        ),
     )
 
 
@@ -286,8 +303,10 @@ def cancel(message):
     send_typing(message)
     bot.send_message(
         message.from_user.id,
-        text=get_telegram_config()["messages"]["msg1"],
-        reply_markup=get_keyboard_reply_markup("btn13"),
+        text=get_telegram_config()["built_in"]["main_menu_message"],
+        reply_markup=get_keyboard_reply_markup(
+            get_telegram_config()["built_in"]["main_menu"]
+        ),
     )
 
 
@@ -302,7 +321,11 @@ def send_image(message):
     send_typing_image(message)
     photo = open("media_samples/image.jpg", "rb")
     bot.send_photo(
-        message.from_user.id, photo, reply_markup=get_keyboard_reply_markup("btn1")
+        message.from_user.id,
+        photo,
+        reply_markup=get_keyboard_reply_markup(
+            get_telegram_config()["built_in"]["main_keyboard"]
+        ),
     )
     # bot.send_photo(message.from_user.id, "FILEID")
 
@@ -312,7 +335,11 @@ def send_video(message):
     # send_typing_video(message)
     video = open("media_samples/video.mp4", "rb")
     bot.send_video(
-        message.from_user.id, video, reply_markup=get_keyboard_reply_markup("btn1")
+        message.from_user.id,
+        video,
+        reply_markup=get_keyboard_reply_markup(
+            get_telegram_config()["built_in"]["main_keyboard"]
+        ),
     )
     # bot.send_video(message.from_user.id, "FILEID")
 
@@ -323,7 +350,11 @@ def send_audio(message):
     # send_typing_audio(message)
     audio = open("media_samples/audio.mp3", "rb")
     bot.send_audio(
-        message.from_user.id, audio, reply_markup=get_keyboard_reply_markup("btn1")
+        message.from_user.id,
+        audio,
+        reply_markup=get_keyboard_reply_markup(
+            get_telegram_config()["built_in"]["main_keyboard"]
+        ),
     )
     # bot.send_audio(message.from_user.id, "FILEID")
 
@@ -345,8 +376,10 @@ def send_welcome(message):
     send_typing(message)
     bot.send_message(
         message.from_user.id,
-        text=get_telegram_config()["messages"]["msg1"],
-        reply_markup=get_keyboard_reply_markup("btn13"),
+        text=get_telegram_config()["built_in"]["main_menu_message"],
+        reply_markup=get_keyboard_reply_markup(
+            get_telegram_config()["built_in"]["main_menu"]
+        ),
     )
     # bot.register_next_step_handler(message, handler)
 
@@ -393,4 +426,4 @@ def handler(message):
 # WARNING It will work only if enable_save_next_step_handlers was called!
 # bot.load_next_step_handlers()
 
-bot.polling(none_stop=False, interval=0, timeout=20)
+bot.polling(none_stop=False, interval=0, timeout=3)

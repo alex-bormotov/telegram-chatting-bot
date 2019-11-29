@@ -72,10 +72,6 @@
   },
 
   "order_data": {
-    "name": "",
-    "phone": "",
-    "tnahks": "!",
-    "thanks_for_order": "",
     "ord_question_1": "",
     "ord_question_2": "",
     "ord_question_3": "",
@@ -93,106 +89,104 @@
     "keyboard_1_btn_3": "btn12",
     "keyboard_1_btn_4": "btn16",
     "keyboard_1_btn_5": "btn15",
-    "keyboard_1_ReplyKeyboardRemove": "False",
 
     "keyboard_2_btn_1": "btn5",
     "keyboard_2_btn_2": "btn6",
     "keyboard_2_btn_3": "btn7",
     "keyboard_2_btn_4": "btn13",
     "keyboard_2_btn_5": "",
-    "keyboard_2_ReplyKeyboardRemove": "False",
 
     "keyboard_3_btn_1": "btn8",
     "keyboard_3_btn_2": "btn9",
     "keyboard_3_btn_3": "btn10",
     "keyboard_3_btn_4": "btn13",
     "keyboard_3_btn_5": "",
-    "keyboard_3_ReplyKeyboardRemove": "False",
 
     "keyboard_4_btn_1": "",
     "keyboard_4_btn_2": "btn4",
     "keyboard_4_btn_3": "",
     "keyboard_4_btn_4": "",
     "keyboard_4_btn_5": "",
-    "keyboard_4_ReplyKeyboardRemove": "False",
 
     "keyboard_5_btn_1": "btn17",
     "keyboard_5_btn_2": "btn12",
     "keyboard_5_btn_3": "btn13",
     "keyboard_5_btn_4": "",
     "keyboard_5_btn_5": "",
-    "keyboard_5_ReplyKeyboardRemove": "False",
 
     "keyboard_6_btn_1": "btn12",
     "keyboard_6_btn_2": "btn13",
     "keyboard_6_btn_3": "",
     "keyboard_6_btn_4": "",
     "keyboard_6_btn_5": "",
-    "keyboard_6_ReplyKeyboardRemove": "False",
 
     "keyboard_7_btn_1": "btn18",
     "keyboard_7_btn_2": "btn19",
     "keyboard_7_btn_3": "btn20",
     "keyboard_7_btn_4": "btn13",
     "keyboard_7_btn_5": "",
-    "keyboard_7_ReplyKeyboardRemove": "False",
 
     "keyboard_8_btn_1": "btn11",
     "keyboard_8_btn_2": "",
     "keyboard_8_btn_3": "",
     "keyboard_8_btn_4": "",
     "keyboard_8_btn_5": "",
-    "keyboard_8_ReplyKeyboardRemove": "False",
 
     "keyboard_9_btn_1": "btn14",
     "keyboard_9_btn_2": "btn4",
     "keyboard_9_btn_3": "",
     "keyboard_9_btn_4": "",
     "keyboard_9_btn_5": "",
-    "keyboard_9_ReplyKeyboardRemove": "False",
 
     "keyboard_10_btn_1": "",
     "keyboard_10_btn_2": "",
     "keyboard_10_btn_3": "",
     "keyboard_10_btn_4": "",
     "keyboard_10_btn_5": "",
-    "keyboard_10_ReplyKeyboardRemove": "False",
 
     "keyboard_11_btn_1": "",
     "keyboard_11_btn_2": "",
     "keyboard_11_btn_3": "",
     "keyboard_11_btn_4": "",
     "keyboard_11_btn_5": "",
-    "keyboard_11_ReplyKeyboardRemove": "False",
 
     "keyboard_12_btn_1": "",
     "keyboard_12_btn_2": "",
     "keyboard_12_btn_3": "",
     "keyboard_12_btn_4": "",
     "keyboard_12_btn_5": "",
-    "keyboard_12_ReplyKeyboardRemove": "False",
 
     "keyboard_13_btn_1": "",
     "keyboard_13_btn_2": "",
     "keyboard_13_btn_3": "",
     "keyboard_13_btn_4": "",
     "keyboard_13_btn_5": "",
-    "keyboard_13_ReplyKeyboardRemove": "False",
 
     "keyboard_14_btn_1": "",
     "keyboard_14_btn_2": "",
     "keyboard_14_btn_3": "",
     "keyboard_14_btn_4": "",
     "keyboard_14_btn_5": "",
-    "keyboard_14_ReplyKeyboardRemove": "False",
 
 
     "keyboard_15_btn_1": "",
     "keyboard_15_btn_2": "",
     "keyboard_15_btn_3": "",
     "keyboard_15_btn_4": "",
-    "keyboard_15_btn_5": "",
-    "keyboard_15_ReplyKeyboardRemove": "False"
+    "keyboard_15_btn_5": ""
+  },
+
+  "built_in": {
+    "FOR INSTANCE": "main_menu BUTTON IS EQUAL btn13",
+    "main_menu": "btn13",
+    "main_menu_message": "",
+    "main_keyboard":"btn1",
+    "cancel_button": "btn4",
+    "cancel_message": "",
+    "name": "",
+    "phone": "",
+    "tnahks": "",
+    "thanks_for_order": ""
   },
 
   "button_belong_keyboard": {
