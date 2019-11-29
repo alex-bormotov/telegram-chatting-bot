@@ -6,9 +6,10 @@ from config import get_fb_config
 
 app = Flask(__name__)
 
-FB_API_URL = get_fb_config()['fb_api_url']
-VERIFY_TOKEN = get_fb_config()['fb_verify_token']
-PAGE_ACCESS_TOKEN = get_fb_config()['page_access_token']
+FB_API_URL = get_fb_config()["fb_api_url"]
+VERIFY_TOKEN = get_fb_config()["fb_verify_token"]
+PAGE_ACCESS_TOKEN = get_fb_config()["page_access_token"]
+
 
 def verify_webhook(req):
     if req.args.get("hub.verify_token") == VERIFY_TOKEN:
@@ -16,90 +17,85 @@ def verify_webhook(req):
     else:
         return "incorrect"
 
+
 ################################################################################
 
 
 def is_user_message(message):
-    """Check if the message is a message from the user"""
-    return (message.get('message') and
-            message['message'].get('text') and
-            not message['message'].get("is_echo"))
 
-
-def get_bot_response(message):
-    """This is just a dummy function, returning a variation of what
-    the user said. Replace this function with one connected to chatbot."""
-    return message
+    return (
+        message.get("message")
+        and message["message"].get("text")
+        and not message["message"].get("is_echo")
+    )
 
 
 def respond(sender, message):
-    """Formulate a response to the user and
-    pass it on to a function that sends it."""
+
     response = get_bot_response(message)
     send_message(sender, response)
 
 
+################################################################################
+
+
+def get_bot_response(message):
+
+    return message
+
+
 def send_message(recipient_id, text):
-    """Send a response to Facebook"""
+
     payload = {
-          "message":{
-            "attachment":{
-              "type":"template",
-              "payload":{
-                "template_type":"button",
-                "text": text,
-                "buttons":[
-                  {
-                    "type":"web_url",
-                    "url":"https://alexbormotov.com",
-                    "title":"My web site"
-                  },
-                  {
-                     "type":"phone_number",
-                     "title":"My phone",
-                     "payload":"+13231234567"
-                  },
-                  {
-                     "type": "account_link",
-                     "url": "https://fb.com"
-                  }
-                ]
-              }
+        "message": {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "button",
+                    "text": text,
+                    "buttons": [
+                        {
+                            "type": "web_url",
+                            "url": "https://alexbormotov.com",
+                            "title": "My web site",
+                        },
+                        {
+                            "type": "phone_number",
+                            "title": "My phone",
+                            "payload": "+13231234567",
+                        },
+                        {"type": "account_link", "url": "https://fb.com"},
+                    ],
+                },
             }
-          },
-        'recipient': {
-            'id': recipient_id
         },
-        'notification_type': 'regular'
+        "recipient": {"id": recipient_id},
+        "notification_type": "regular",
     }
 
-    auth = {
-        'access_token': PAGE_ACCESS_TOKEN
-    }
+    auth = {"access_token": PAGE_ACCESS_TOKEN}
 
-    response = requests.post(
-        FB_API_URL,
-        params=auth,
-        json=payload
-    )
+    response = requests.post(FB_API_URL, params=auth, json=payload)
 
     return response.json()
 
 
-@app.route("/webhook", methods=['GET','POST'])
+################################################################################
+
+
+@app.route("/webhook", methods=["GET", "POST"])
 def listen():
-    """This is the main function flask uses to
-    listen at the `/webhook` endpoint"""
-    if request.method == 'GET':
+
+    if request.method == "GET":
         return verify_webhook(request)
 
-    if request.method == 'POST':
+    if request.method == "POST":
         payload = request.json
-        event = payload['entry'][0]['messaging']
+        event = payload["entry"][0]["messaging"]
         for x in event:
             if is_user_message(x):
-                text = x['message']['text']
-                sender_id = x['sender']['id']
+                text = x["message"]["text"]
+                sender_id = x["sender"]["id"]
                 respond(sender_id, text)
 
         return "ok"
