@@ -26,5 +26,5 @@ def send_email(message):
         server.quit()
 
     except Exception as e:
-        # pass
-        print(e)
+        pass
+        # print(e)

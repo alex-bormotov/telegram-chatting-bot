@@ -145,7 +145,7 @@ def get_step(question_form):
 
 
 answers_question_form_2 = []
-question_form_2_count = 0
+question_form_2_count = 1
 
 
 def question_form_2(message):
@@ -189,12 +189,12 @@ def question_form_2(message):
             answers_question_form_2.remove(answers_question_form_2[0])
             send_email(str(answers_question_form_2))
             answers_question_form_2 = []
-            question_form_2_count = 0
+            question_form_2_count = 1
             bot.register_next_step_handler(message, handler)
 
 
 answers_question_form_1 = []
-question_form_1_count = 0
+question_form_1_count = 1
 
 
 def question_form_1(message):
@@ -238,7 +238,7 @@ def question_form_1(message):
             answers_question_form_1.remove(answers_question_form_1[0])
             send_email(str(answers_question_form_1))
             answers_question_form_1 = []
-            question_form_1_count = 0
+            question_form_1_count = 1
             bot.register_next_step_handler(message, handler)
 
 
@@ -354,4 +354,4 @@ def handler(message):
 # WARNING It will work only if enable_save_next_step_handlers was called!
 # bot.load_next_step_handlers()
 
-bot.polling(none_stop=False, interval=0, timeout=3)
+bot.polling(none_stop=False, interval=0, timeout=2)
