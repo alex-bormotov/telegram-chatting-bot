@@ -7,12 +7,6 @@ def get_telegram_config():
         return config
 
 
-def get_fb_config():
-    with open("config_fb.json", "r") as read_file:
-        config = json.load(read_file)
-        return config
-
-
 def get_email_config():
     with open("config_email.json", "r") as read_file:
         config = json.load(read_file)
