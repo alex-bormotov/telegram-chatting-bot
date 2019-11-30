@@ -7,8 +7,10 @@ from email_send import send_email
 answers_question_form = []
 question_form_count = 0
 question_dict = ""
-media_path = ""
 total_steps = 0
+
+media_path = ""
+media_type = ""
 
 # https://github.com/python-telegram-bot/python-telegram-bot
 bot = telebot.TeleBot(get_telegram_config()["telegram_bot_token"])
@@ -145,13 +147,9 @@ def question_form(message):
         bot.register_next_step_handler(message, cancel)
 
     else:
-
-        print(f"question_form_count {question_form_count}")
-
         send_typing(message)
 
         if question_form_count < total_steps:
-            print(f"question_form_count {question_form_count}")
             bot.send_message(
                 message.from_user.id,
                 text=get_telegram_config()[question_dict][
@@ -201,59 +199,40 @@ def cancel(message):
 
 
 # https://github.com/eternnoir/pyTelegramBotAPI#telebot
-def send_image(message):
+def send_media(message):
 
-    global media_path
+    if media_type == "image":
+        send_typing_image(message)
+        photo = open(media_path, "rb")
+        bot.send_photo(
+            message.from_user.id,
+            photo,
+            reply_markup=get_keyboard_reply_markup(
+                get_telegram_config()["built_in"]["main_keyboard"]
+            ),
+        )
 
-    send_typing_image(message)
-    photo = open(media_path, "rb")
+    if media_type == "audio":
+        send_typing_audio(message)
+        audio = open(media_path, "rb")
+        bot.send_audio(
+            message.from_user.id,
+            audio,
+            reply_markup=get_keyboard_reply_markup(
+                get_telegram_config()["built_in"]["main_keyboard"]
+            ),
+        )
 
-    media_path = ""
-
-    bot.send_photo(
-        message.from_user.id,
-        photo,
-        reply_markup=get_keyboard_reply_markup(
-            get_telegram_config()["built_in"]["main_keyboard"]
-        ),
-    )
-
-
-# # https://github.com/eternnoir/pyTelegramBotAPI#telebot
-# def send_image(message):
-#     send_typing_image(message)
-#     photo = open("media_samples/image.jpg", "rb")
-#     bot.send_photo(
-#         message.from_user.id,
-#         photo,
-#         reply_markup=get_keyboard_reply_markup(
-#             get_telegram_config()["built_in"]["main_keyboard"]
-#         ),
-#     )
-#
-#
-# def send_video(message):
-#     send_typing_video(message)
-#     video = open("media_samples/video.mp4", "rb")
-#     bot.send_video(
-#         message.from_user.id,
-#         video,
-#         reply_markup=get_keyboard_reply_markup(
-#             get_telegram_config()["built_in"]["main_keyboard"]
-#         ),
-#     )
-#
-#
-# def send_audio(message):
-#     send_typing_audio(message)
-#     audio = open("media_samples/audio.mp3", "rb")
-#     bot.send_audio(
-#         message.from_user.id,
-#         audio,
-#         reply_markup=get_keyboard_reply_markup(
-#             get_telegram_config()["built_in"]["main_keyboard"]
-#         ),
-#     )
+    if media_type == "video":
+        send_typing_video(message)
+        video = open(media_path, "rb")
+        bot.send_video(
+            message.from_user.id,
+            video,
+            reply_markup=get_keyboard_reply_markup(
+                get_telegram_config()["built_in"]["main_keyboard"]
+            ),
+        )
 
 
 @bot.message_handler(commands=["help", "start"])
@@ -274,6 +253,8 @@ def handler(message):
     global question_form_count
     global total_steps
     global question_dict
+
+    global media_type
     global media_path
 
     try:
@@ -313,9 +294,10 @@ def handler(message):
 
                 bot.register_next_step_handler(message, func)
 
-            if type(msg_content) is list and msg_content[0] != "question_form":
+            if type(msg_content) is list and msg_content[0] == "send_media":
                 func = eval(msg_content[0])
-                media_path = msg_content[1]
+                media_type = msg_content[1]
+                media_path = msg_content[2]
 
                 bot.send_message(
                     message.from_user.id,
