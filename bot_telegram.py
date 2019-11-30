@@ -6,8 +6,9 @@ from email_send import send_email
 
 answers_question_form = []
 question_form_count = 0
-curent_step = 0
 question_dict = ""
+media_path = ""
+total_steps = 0
 
 # https://github.com/python-telegram-bot/python-telegram-bot
 bot = telebot.TeleBot(get_telegram_config()["telegram_bot_token"])
@@ -121,30 +122,10 @@ def get_keyboard_reply_markup(btn):
     return markup
 
 
-def get_step(question_form):
-
-    global curent_step
-
-    total_steps = int(
-        [k[9:] for k, v in get_telegram_config()[question_form].items()][-1]
-    )
-    if curent_step <= total_steps:
-        steps = (
-            [k for k, v in get_telegram_config()[question_form].items()][curent_step],
-            total_steps,
-        )
-        curent_step += 1
-        if curent_step == total_steps:
-            curent_step = 0
-
-    return steps
-
-
 def question_form(message):
 
     global answers_question_form
     global question_form_count
-    global curent_step
     global question_dict
 
     if (
@@ -164,13 +145,18 @@ def question_form(message):
         bot.register_next_step_handler(message, cancel)
 
     else:
-        send_typing(message)
-        data = get_step(question_dict)
 
-        if question_form_count < data[1]:
+        print(f"question_form_count {question_form_count}")
+
+        send_typing(message)
+
+        if question_form_count < total_steps:
+            print(f"question_form_count {question_form_count}")
             bot.send_message(
                 message.from_user.id,
-                text=get_telegram_config()[question_dict][data[0]],
+                text=get_telegram_config()[question_dict][
+                    f"{[k for k, v in get_telegram_config()[question_dict].items()][question_form_count]}"
+                ],
             )
             answers_question_form.append(message.text)
 
@@ -183,30 +169,27 @@ def question_form(message):
 
             bot.send_message(
                 message.from_user.id,
-                text=get_telegram_config()["built_in"]["thanks_question_form_2"],
+                text=get_telegram_config()["built_in"]["thanks_question_form"],
                 reply_markup=get_keyboard_reply_markup(
                     get_telegram_config()["built_in"]["main_keyboard"]
                 ),
             )
             send_email(str(answers_question_form))
             answers_question_form = []
-            question_form_count = 0
-            curent_step = 0
-            question_dict = ""
+            question_form_count = 1
+            # question_dict = ""
 
 
 def cancel(message):
 
     global answers_question_form
     global question_form_count
-    global curent_step
     global question_dict
 
     send_typing(message)
 
-    question_form_count = 0
-    curent_step = 0
-    question_dict = ""
+    question_form_count = 1
+    answers_question_form = []
 
     bot.send_message(
         message.from_user.id,
@@ -219,8 +202,14 @@ def cancel(message):
 
 # https://github.com/eternnoir/pyTelegramBotAPI#telebot
 def send_image(message):
+
+    global media_path
+
     send_typing_image(message)
-    photo = open("media_samples/image.jpg", "rb")
+    photo = open(media_path, "rb")
+
+    media_path = ""
+
     bot.send_photo(
         message.from_user.id,
         photo,
@@ -230,28 +219,41 @@ def send_image(message):
     )
 
 
-def send_video(message):
-    send_typing_video(message)
-    video = open("media_samples/video.mp4", "rb")
-    bot.send_video(
-        message.from_user.id,
-        video,
-        reply_markup=get_keyboard_reply_markup(
-            get_telegram_config()["built_in"]["main_keyboard"]
-        ),
-    )
-
-
-def send_audio(message):
-    send_typing_audio(message)
-    audio = open("media_samples/audio.mp3", "rb")
-    bot.send_audio(
-        message.from_user.id,
-        audio,
-        reply_markup=get_keyboard_reply_markup(
-            get_telegram_config()["built_in"]["main_keyboard"]
-        ),
-    )
+# # https://github.com/eternnoir/pyTelegramBotAPI#telebot
+# def send_image(message):
+#     send_typing_image(message)
+#     photo = open("media_samples/image.jpg", "rb")
+#     bot.send_photo(
+#         message.from_user.id,
+#         photo,
+#         reply_markup=get_keyboard_reply_markup(
+#             get_telegram_config()["built_in"]["main_keyboard"]
+#         ),
+#     )
+#
+#
+# def send_video(message):
+#     send_typing_video(message)
+#     video = open("media_samples/video.mp4", "rb")
+#     bot.send_video(
+#         message.from_user.id,
+#         video,
+#         reply_markup=get_keyboard_reply_markup(
+#             get_telegram_config()["built_in"]["main_keyboard"]
+#         ),
+#     )
+#
+#
+# def send_audio(message):
+#     send_typing_audio(message)
+#     audio = open("media_samples/audio.mp3", "rb")
+#     bot.send_audio(
+#         message.from_user.id,
+#         audio,
+#         reply_markup=get_keyboard_reply_markup(
+#             get_telegram_config()["built_in"]["main_keyboard"]
+#         ),
+#     )
 
 
 @bot.message_handler(commands=["help", "start"])
@@ -270,9 +272,9 @@ def send_welcome(message):
 def handler(message):
 
     global question_form_count
-    global curent_step
-
+    global total_steps
     global question_dict
+    global media_path
 
     try:
         if message.text in [v for v in get_telegram_config()["buttons"].values()]:
@@ -291,17 +293,33 @@ def handler(message):
                     text=msg,
                     reply_markup=get_keyboard_reply_markup(btn),
                 )
-            if type(msg_content) is list:
+            if type(msg_content) is list and msg_content[0] == "question_form":
                 func = eval(msg_content[0])
                 question_dict = msg_content[1]
                 start_msg = get_telegram_config()[question_dict][msg_content[2]]
 
-                question_form_count += 1
-                curent_step += 1
+                total_steps = int(
+                    [k[9:] for k, v in get_telegram_config()[question_dict].items()][-1]
+                )
+
+                if question_form_count == 0:
+                    question_form_count += 1
 
                 bot.send_message(
                     message.from_user.id,
                     text=start_msg,
+                    reply_markup=get_keyboard_reply_markup(btn),
+                )
+
+                bot.register_next_step_handler(message, func)
+
+            if type(msg_content) is list and msg_content[0] != "question_form":
+                func = eval(msg_content[0])
+                media_path = msg_content[1]
+
+                bot.send_message(
+                    message.from_user.id,
+                    text=msg_content[0],
                     reply_markup=get_keyboard_reply_markup(btn),
                 )
 
