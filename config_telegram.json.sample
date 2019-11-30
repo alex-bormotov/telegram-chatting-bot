@@ -4,26 +4,26 @@
   "CANCEL_FUNCTION": "PUT ['cancel', 'message after cancel'] into 'msg' whatever you want, and give name btn that is equal msg number.",
 
 
-  "telegram_bot_token": "",
+  "telegram_bot_token": "In telegram contact to @BotFather",
 
   "buttons": {
     "btn1": "",
-    "btn2": "",
-    "btn3": "Send order",
+    "btn2": "Our Services",
+    "btn3": "Make order",
     "btn4": "Cancel",
-    "btn5": "",
-    "btn6": "",
-    "btn7": "",
-    "btn8": "",
-    "btn9": "",
-    "btn10": "",
-    "btn11": "Yes, send me media",
+    "btn5": "Extra Deals",
+    "btn6": "Season Deals",
+    "btn7": "Other Deals",
+    "btn8": "Event1",
+    "btn9": "Event2",
+    "btn10": "Other Event",
+    "btn11": "Confirm",
     "btn12": "Contact us",
-    "btn13": "Main Menu",
+    "btn13": "Main menu",
     "btn14": "",
     "btn15": "Google Form",
     "btn16": "Media TEST",
-    "btn17": "Make order",
+    "btn17": "Confirm order",
     "btn18": "Get image",
     "btn19": "Get audio",
     "btn20": "Get video",
@@ -41,16 +41,16 @@
 
   "messages": {
     "msg1": "",
-    "msg2": "",
-    "msg3": "",
+    "msg2": "Promo",
+    "msg3": "Hello, follow the instruction to make the order",
     "msg4": ["cancel", "IN built_in_buttons cancel_message"],
-    "msg5": "",
-    "msg6": "",
-    "msg7": "",
-    "msg8": "",
-    "msg9": "",
-    "msg10": "",
-    "msg11": "",
+    "msg5": "Extra Deals - Promo",
+    "msg6": "Season Deals - Promo",
+    "msg7": "Other Deals - Promo",
+    "msg8": "Event1 - descripton",
+    "msg9": "Event2 - descripton",
+    "msg10": "Tap 'Contact us' and leave your data.",
+    "msg11": "Confirm",
     "msg12": ["question_form", "question_form_2", "question_1"],
     "msg13": "Main menu",
     "msg14": "",
@@ -75,30 +75,30 @@
   "built_in": {
     "FOR INSTANCE": "main_menu BUTTON IS EQUAL btn13",
     "main_menu": "btn13",
-    "main_menu_message": "",
+    "main_menu_message": "Hello, this is hello message from start",
     "main_keyboard":"btn1",
     "cancel_button": "btn4",
-    "cancel_message": "canceled, type /start for beginning",
-    "thanks_question_form": ""
+    "cancel_message": "Canceled, from begin type /start",
+    "thanks_question_form": "Thanks for the submission, we contact you within 24 hours"
   },
 
   "question_form_1": {
-    "question_1": "",
-    "question_2": "",
-    "question_3": "",
-    "question_4": "",
-    "question_5": "",
-    "question_6": "",
-    "question_7": "",
-    "question_8": "",
-    "question_9": ""
+    "question_1": "Question 1",
+    "question_2": "Question 2",
+    "question_3": "Question 3",
+    "question_4": "Question 4",
+    "question_5": "Question 5",
+    "question_6": "Question 6",
+    "question_7": "Question 7",
+    "question_8": "Question 8",
+    "question_9": "Question 9"
   },
 
   "question_form_2": {
-    "question_1": "",
-    "question_2": "",
-    "question_3": "",
-    "question_4": ""
+    "question_1": "Question 1",
+    "question_2": "Question 2",
+    "question_3": "Question 3",
+    "question_4": "Question 4"
   },
 
   "keyboards": {
@@ -227,3 +227,4 @@
     "btn30": "keyboard_1"
   }
 }
+
