@@ -1,0 +1,9 @@
+{
+  "INFO_GMAIL_SETUP": "IF 2FA enabled - use APPpassword, if not see https://support.google.com/accounts/answer/6010255?authuser=1&p=less-secure-apps&hl=en-GB&authuser=1&visit_id=637104749680745035-1312116972&rd=1",
+  "smtp_server": "smtp.gmail.com",
+  "smtp_server_port": "587",
+  "sender_email": "xxx@gmail.com",
+  "email_password": "xxxxx",
+  "receiver_email": "xxxx@gmail.com",
+  "subject": "Order from Telegram bot"
+}
